@@ -9,7 +9,8 @@ public class Unit : MonoBehaviour {
         Moving,
         Pursuing,
         Attacking,
-        Casting
+        Casting,
+        Stunned
     }
 
     public int team = 0;
@@ -19,9 +20,12 @@ public class Unit : MonoBehaviour {
     public float currentMoveSpeed = 1;
     public float attackPeriod = 1;
     public float attackDelay = 0.5f;
+    public float interruptDuration = 0.5f;
+    public bool interruptableByNormalAttack = true;
     public float pursueDistance = 0;
     public float decayTime = 5;
     public bool isDead = false;
+    public bool isInvincible = false;
     public State state = State.Idle;
     public Vector3 moveTargetPoint;
     public Unit moveTargetUnit;
@@ -34,6 +38,7 @@ public class Unit : MonoBehaviour {
     private Quaternion targetRotation;
     private float attackTimer = 0;
     private float castTimer = 0;
+    private float interruptTimer = 0;
     private float decayTimer = 0;
 
 
@@ -84,6 +89,14 @@ public class Unit : MonoBehaviour {
                     state = State.Idle;
                 }
             }
+
+            if (interruptTimer > 0) {
+                // Stunned
+                interruptTimer -= Time.deltaTime;
+                if (interruptTimer <= 0 && state == State.Stunned) {
+                    state = State.Idle;
+                }
+            }
         } else {
             decayTimer -= Time.deltaTime;
             if (decayTimer <= 0) {
@@ -103,8 +116,12 @@ public class Unit : MonoBehaviour {
         // To be overridden
     }
     public virtual int ReceiveDamageAction(int damage, Unit attacker) {
-        // To be overridden
+        // To be overridden, return actual damage received.
         return damage;
+    }
+    public virtual float InterruptAction(float duration) {
+        // To be overridden, return actual duration stunned.
+        return duration;
     }
     public virtual void DieAction() {
         // To be overridden
@@ -113,7 +130,7 @@ public class Unit : MonoBehaviour {
 
 
     public bool isBusy() {
-        return state == State.Attacking || state == State.Casting;
+        return state == State.Attacking || state == State.Casting || state == State.Stunned;
     }
 
     public void Stop() {
@@ -150,7 +167,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void Attack(Unit target) {
-        if (!isBusy()) {
+        if (!isBusy() && attackTimer <= 0) {
             state = State.Attacking;
             PreAttackAction(target);
             attackTimer = attackPeriod;
@@ -159,7 +176,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void Cast(Unit target, SpecialAttack specialAttack) {
-        if (!isBusy() && specialAttack.IsUsableNow(target, this)) {
+        if (!isBusy() && castTimer <= 0 && specialAttack.IsUsableNow(target, this)) {
             state = State.Casting;
             currentSpecialAttack = specialAttack;
             specialAttack.PreAttackAction(target, this);
@@ -168,17 +185,33 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public void ReceiveDamage(int damage, Unit attacker) {
-        HP -= ReceiveDamageAction(damage, attacker);
-        if (HP <= 0) {
-            Kill();
+    // if time is 0, interrupt with default unit interrupt duration.
+    public void Interrupt(float time = 0) {
+        float duration = InterruptAction(time == 0 ? interruptDuration : time);
+        if (duration > 0) {
+            state = State.Stunned;
+            attackTimer = 0;
+            castTimer = 0;
+        }
+    }
+
+    public void ReceiveDamage(int damage, Unit attacker, bool nonInterruptive = false) {
+        if (!isInvincible) {
+            HP -= ReceiveDamageAction(damage, attacker);
+            if (HP <= 0) {
+                Kill();
+            } else if (!nonInterruptive && interruptableByNormalAttack) {
+                Interrupt();
+            }
         }
     }
 
     public void Kill() {
-        decayTimer = decayTime;
-        isDead = true;
-        DieAction();
+        if (!isInvincible) {
+            decayTimer = decayTime;
+            isDead = true;
+            DieAction();
+        }
     }
 
 
