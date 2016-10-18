@@ -66,36 +66,36 @@ public class Unit : MonoBehaviour {
             }
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
 
+            // Attacking
             if (attackTimer > 0) {
-                // Attacking
                 attackTimer -= Time.deltaTime;
                 float attackMoment = attackPeriod - attackDelay;
                 if (attackTimer <= attackMoment && attackTimer + Time.deltaTime > attackMoment) {
                     AttackAction(attackTarget);
                 }
-                if (attackTimer <= 0 && state == State.Attacking) {
-                    state = State.Idle;
-                }
+            }
+            if (attackTimer <= 0 && state == State.Attacking) {
+                state = State.Idle;
             }
 
+            // Casting
             if (castTimer > 0) {
-                // Casting
                 castTimer -= Time.deltaTime;
                 float castMoment = currentSpecialAttack.attackPeriod - currentSpecialAttack.attackDelay;
                 if (castTimer <= castMoment && castTimer + Time.deltaTime > castMoment) {
                     currentSpecialAttack.AttackAction(attackTarget, this);
                 }
-                if (castTimer <= 0 && state == State.Casting) {
-                    state = State.Idle;
-                }
+            }
+            if (castTimer <= 0 && state == State.Casting) {
+                state = State.Idle;
             }
 
+            // Stunned
             if (interruptTimer > 0) {
-                // Stunned
                 interruptTimer -= Time.deltaTime;
-                if (interruptTimer <= 0 && state == State.Stunned) {
-                    state = State.Idle;
-                }
+            }
+            if (interruptTimer <= 0 && state == State.Stunned) {
+                state = State.Idle;
             }
         } else {
             decayTimer -= Time.deltaTime;
@@ -190,6 +190,7 @@ public class Unit : MonoBehaviour {
         float duration = InterruptAction(time == 0 ? interruptDuration : time);
         if (duration > 0) {
             state = State.Stunned;
+            interruptTimer = interruptDuration;
             attackTimer = 0;
             castTimer = 0;
         }
