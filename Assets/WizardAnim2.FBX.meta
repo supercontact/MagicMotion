@@ -1,0 +1,425 @@
+fileFormatVersion: 2
+guid: 29c5594e69ba93242899de1aeefadf55
+timeCreated: 1451859659
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone-Head
+    100002: Bone-Hip
+    100004: Bone-L-Foot
+    100006: Bone-L-Hand
+    100008: Bone-L-LowerArm
+    100010: Bone-L-LowerLeg
+    100012: Bone-L-UpperArm
+    100014: Bone-L-UpperLeg
+    100016: Bone-R-Foot
+    100018: Bone-R-Hand
+    100020: Bone-R-LowerArm
+    100022: Bone-R-LowerLeg
+    100024: Bone-R-UpperArm
+    100026: Bone-R-UpperLeg
+    100028: Bone-Spine
+    100030: Box001
+    100032: Box002
+    100034: Circle001
+    100036: Cone001
+    100038: Cone002
+    100040: Cylinder001
+    100042: Cylinder002
+    100044: IK Chain001
+    100046: IK Chain002
+    100048: IK Chain003
+    100050: IK Chain004
+    100052: Sphere001
+    100054: Sphere002
+    100056: Sphere003
+    100058: //RootNode
+    400000: Bone-Head
+    400002: Bone-Hip
+    400004: Bone-L-Foot
+    400006: Bone-L-Hand
+    400008: Bone-L-LowerArm
+    400010: Bone-L-LowerLeg
+    400012: Bone-L-UpperArm
+    400014: Bone-L-UpperLeg
+    400016: Bone-R-Foot
+    400018: Bone-R-Hand
+    400020: Bone-R-LowerArm
+    400022: Bone-R-LowerLeg
+    400024: Bone-R-UpperArm
+    400026: Bone-R-UpperLeg
+    400028: Bone-Spine
+    400030: Box001
+    400032: Box002
+    400034: Circle001
+    400036: Cone001
+    400038: Cone002
+    400040: Cylinder001
+    400042: Cylinder002
+    400044: IK Chain001
+    400046: IK Chain002
+    400048: IK Chain003
+    400050: IK Chain004
+    400052: Sphere001
+    400054: Sphere002
+    400056: Sphere003
+    400058: //RootNode
+    2300000: Box001
+    2300002: Box002
+    2300004: Cone001
+    2300006: Cone002
+    2300008: Cylinder002
+    2300010: Sphere001
+    2300012: Sphere002
+    2300014: Sphere003
+    3300000: Box001
+    3300002: Box002
+    3300004: Cone001
+    3300006: Cone002
+    3300008: Cylinder002
+    3300010: Sphere001
+    3300012: Sphere002
+    3300014: Sphere003
+    4300000: Cylinder001
+    4300002: Sphere001
+    4300004: Cone001
+    4300006: Sphere002
+    4300008: Cylinder002
+    4300010: Cone002
+    4300012: Sphere003
+    4300014: Box001
+    4300016: Box002
+    7400000: Stand
+    7400002: Walk
+    7400004: Run
+    9500000: //RootNode
+    13700000: Cylinder001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Stand
+      takeName: Take 001
+      firstFrame: 2
+      lastFrame: 99
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Circle001
+        weight: 1
+      - path: Circle001/Bone-Hip
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot/Box001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot/Box002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head/Sphere001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head/Sphere001/Cone001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002/Cylinder002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002/Cylinder002/Cone002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand/Sphere003
+        weight: 1
+      - path: Cylinder001
+        weight: 1
+      - path: IK Chain001
+        weight: 1
+      - path: IK Chain002
+        weight: 1
+      - path: IK Chain003
+        weight: 1
+      - path: IK Chain004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 101
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 1
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Circle001
+        weight: 1
+      - path: Circle001/Bone-Hip
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot/Box001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot/Box002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head/Sphere001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head/Sphere001/Cone001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002/Cylinder002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002/Cylinder002/Cone002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand/Sphere003
+        weight: 1
+      - path: Cylinder001
+        weight: 1
+      - path: IK Chain001
+        weight: 1
+      - path: IK Chain002
+        weight: 1
+      - path: IK Chain003
+        weight: 1
+      - path: IK Chain004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 161
+      lastFrame: 200
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 1
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Circle001
+        weight: 1
+      - path: Circle001/Bone-Hip
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot/Box001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot/Box002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head/Sphere001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-Head/Sphere001/Cone001
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002/Cylinder002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002/Cylinder002/Cone002
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand
+        weight: 1
+      - path: Circle001/Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand/Sphere003
+        weight: 1
+      - path: Cylinder001
+        weight: 1
+      - path: IK Chain001
+        weight: 1
+      - path: IK Chain002
+        weight: 1
+      - path: IK Chain003
+        weight: 1
+      - path: IK Chain004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,4 +1,3 @@
-*.meta
 /.vs
 /MagicMotion.CSharp.Editor.csproj
 /MagicMotion.CSharp.Plugins.csproj

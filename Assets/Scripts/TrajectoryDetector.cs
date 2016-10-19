@@ -2,9 +2,11 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class ActionDetector : MonoBehaviour {
+public class TrajectoryDetector : MonoBehaviour {
 
-    public static List<ActionDetector> actionList = new List<ActionDetector>();
+    public delegate void TriggerHandler(string type);
+    public static event TriggerHandler OnTrigger;
+    public static List<TrajectoryDetector> actionList = new List<TrajectoryDetector>();
 
     public Vector3[] path;
 
@@ -183,6 +185,9 @@ public class ActionDetector : MonoBehaviour {
 
     private void finish() {
         clearAll();
+        if (OnTrigger != null) {
+            OnTrigger(type);
+        }
         image.gameObject.SetActive(true);
         image.color = Color.white;
     }
@@ -194,7 +199,7 @@ public class ActionDetector : MonoBehaviour {
     }
 
     public static void clearAll() {
-        foreach (ActionDetector action in actionList) {
+        foreach (TrajectoryDetector action in actionList) {
             action.clear();
         }
     }
