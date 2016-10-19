@@ -1,7 +1,8 @@
 *.meta
-.vs
+/.vs
 /MagicMotion.CSharp.Editor.csproj
 /MagicMotion.CSharp.Plugins.csproj
 /MagicMotion.sln
 /MagicMotion.CSharp.csproj
-Library
+/Library
+/Temp
