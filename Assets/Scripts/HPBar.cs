@@ -28,6 +28,7 @@ public class HPBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float hpRatio = (float)unit.HP / unit.maxHP;
+		hpRatio = Mathf.Clamp01 (hpRatio);
 		transform.LookAt(cameraMain.transform); 
 		transform.localScale = new Vector3 (hpRatio, 1, 1);
 		bar.material.color = colorMix.GetColor (hpRatio);
