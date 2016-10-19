@@ -5,3 +5,7 @@
 /MagicMotion.CSharp.csproj
 /Library
 /Temp
+/obj
+/Assembly-CSharp-Editor.csproj
+/Assembly-CSharp-firstpass.csproj
+/Assembly-CSharp.csproj

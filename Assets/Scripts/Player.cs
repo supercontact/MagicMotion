@@ -13,14 +13,9 @@ public class Player : Unit {
         base.Start();
         anim = GetComponent<Animator>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        Vector3 pos = transform.position;
-        //pos.x += speed * Input.GetAxis("Horizontal");
-        //pos.z += speed * Input.GetAxis("Vertical");
-        transform.position = pos;
 
+    // Update is called once per frame
+    public override void Update() {
 
         Vector3 v = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         v *= Input.GetKey(KeyCode.LeftShift) ? speed / 2 : speed;
@@ -41,7 +36,7 @@ public class Player : Unit {
             float r = 1 - (Screen.width - handPosition.x) / rotateAreaWidth;
             transform.rotation = Quaternion.AngleAxis(r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
         }
-        
 
+        base.Update();
     }
 }
