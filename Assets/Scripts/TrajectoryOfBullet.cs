@@ -2,65 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TrajectoryLine: MonoBehaviour
+public class TrajectoryOfBullet: MonoBehaviour
 {
 	public Unit target;
+	public Unit attacker;
+	public int team = 0;
 	public float distanceMax = 10.0f;
 	public float distanceMin = 0.0f;
-//	public float power = 5;
 	public float speedInit = 5.0f;
-	public float freezeTime = 1.0f;
+	public float damage = 10.0f;
 
 	protected CharacterController controller;
 
-	private bool targetReady = false;
-	private bool isPressed = false;
-	private bool isBallThrown = false;
-	private float waitTime = 0.0f;
-	private float currentMoveSpeed = 0;
 	private Quaternion targetRotation;
-	Vector3 targetPosition;
+	private Vector3 targetPosition;
+	private Vector3 attackerPosition;
 
 	void Start() {
-
+		controller = GetComponent<CharacterController>();
 		targetPosition = target.transform.position;
+		attackerPosition = attacker.transform.position;
 	}
 
 	void Update() {
-		
-		if (isBallThrown) {
-			return;
-		}
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			isPressed = true;
-		}
-		if(isPressed) {
 
-			if (targetReady) {
-				AcquireTargetPosition ();
-				Launch ();
-			}
-		}
-		waitTime += Time.deltaTime;
-		if (waitTime >= freezeTime) {
-			targetReady = true;
-			waitTime = 0;
-		}
+		Launch ();
 
 	}
 		
 
 	private void Launch()
 	{
-		Debug.Log(" ball");
 		float distanceToTarget = Vector3.Distance (targetPosition,transform.position);
 		if (distanceToTarget <= distanceMax) {
 			// Pursuing
-			currentMoveSpeed = speedInit;
-			float moveDistance = currentMoveSpeed * Time.deltaTime;
+			float moveDistance = speedInit * Time.deltaTime;
 			if (moveDistance > distanceToTarget) {
 				controller.Move (distanceToTarget * (targetPosition - transform.position).normalized);
-				isPressed = false;
 			} else {
 				controller.Move (moveDistance * (targetPosition - transform.position).normalized);
 			}
