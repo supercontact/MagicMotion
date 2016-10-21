@@ -48,6 +48,10 @@ public class GrabbingProjectile : MonoBehaviour {
                     return;
                 }
             }
+            if (collidersInRange.Length > 0) {
+                Cancel(true);
+                return;
+            }
         } else {
             float alpha = 1 - cancelTimer / cancelDuration;
             float scale = 1 + 2 * cancelTimer / cancelDuration;
