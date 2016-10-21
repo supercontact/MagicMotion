@@ -10,12 +10,16 @@ public class Unit : MonoBehaviour {
         Pursuing,
         Attacking,
         Casting,
-        Stunned
+        Stunned,
+        Flying,
+        Controlled
     }
 
     public int team = 0;
     public int maxHP = 100;
     public int HP = 100;
+    public float mass = 1;
+    public float gravity = 5;
     public float moveSpeed = 1;
     public float currentMoveSpeed = 1;
     public float attackPeriod = 1;
@@ -24,6 +28,7 @@ public class Unit : MonoBehaviour {
     public bool interruptableByNormalAttack = true;
     public float pursueDistance = 0;
     public float decayTime = 5;
+    public bool isImmuneToControl = false;
     public bool isDead = false;
     public bool isInvincible = false;
     public State state = State.Idle;
@@ -33,13 +38,16 @@ public class Unit : MonoBehaviour {
     public Unit castTarget;
     public SpecialAttack currentSpecialAttack;
 
-    protected CharacterController controller;
+    public CharacterController controller;
 
     private Quaternion targetRotation;
     private float attackTimer = 0;
+    private bool attacked = false;
     private float castTimer = 0;
+    private bool cast = false;
     private float interruptTimer = 0;
     private float decayTimer = 0;
+    private Vector3 flyingVelocity;
 
 
     public virtual void Start() {
@@ -67,35 +75,37 @@ public class Unit : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
 
             // Attacking
-            if (attackTimer > 0) {
+            if (state == State.Attacking) {
                 attackTimer -= Time.deltaTime;
                 float attackMoment = attackPeriod - attackDelay;
-                if (attackTimer <= attackMoment && attackTimer + Time.deltaTime > attackMoment) {
+                if (attackTimer <= attackMoment && !attacked) {
                     AttackAction(attackTarget);
+                    attacked = true;
                 }
-            }
-            if (attackTimer <= 0 && state == State.Attacking) {
-                state = State.Idle;
+                if (attackTimer <= 0) {
+                    state = State.Idle;
+                }
             }
 
             // Casting
-            if (castTimer > 0) {
+            if (state == State.Casting) {
                 castTimer -= Time.deltaTime;
-                float castMoment = currentSpecialAttack.attackPeriod - currentSpecialAttack.attackDelay;
-                if (castTimer <= castMoment && castTimer + Time.deltaTime > castMoment) {
-                    currentSpecialAttack.AttackAction(attackTarget, this);
+                float castMoment = currentSpecialAttack.lasting ? 0 : currentSpecialAttack.attackPeriod - currentSpecialAttack.attackDelay;
+                if (castTimer <= castMoment && !cast) {
+                    currentSpecialAttack.AttackAction();
+                    cast = true;
                 }
-            }
-            if (castTimer <= 0 && state == State.Casting) {
-                state = State.Idle;
+                if (castTimer <= 0 && !currentSpecialAttack.lasting) {
+                    state = State.Idle;
+                }
             }
 
             // Stunned
-            if (interruptTimer > 0) {
+            if (state == State.Stunned) {
                 interruptTimer -= Time.deltaTime;
-            }
-            if (interruptTimer <= 0 && state == State.Stunned) {
-                state = State.Idle;
+                if (interruptTimer <= 0) {
+                    state = State.Idle;
+                }
             }
         } else {
             decayTimer -= Time.deltaTime;
@@ -106,7 +116,20 @@ public class Unit : MonoBehaviour {
         }
 
         // Gravity
-        controller.Move(10 * Vector3.down * Time.deltaTime);
+        if (state != State.Controlled) {
+            if (!controller.isGrounded) {
+                flyingVelocity += gravity * Time.deltaTime * Vector3.down;
+                controller.Move(flyingVelocity * Time.deltaTime);
+            } else {
+                if (state == State.Flying) {
+                    state = State.Idle;
+                    LandAction(flyingVelocity);
+                }
+                flyingVelocity = Vector3.zero;
+            }
+        } else {
+            flyingVelocity = Vector3.zero;
+        }
     }
 
     public virtual void PreAttackAction(Unit target) {
@@ -123,6 +146,14 @@ public class Unit : MonoBehaviour {
         // To be overridden, return actual duration stunned.
         return duration;
     }
+    public virtual Vector3 SendFlyingAction(Vector3 acc) {
+        // To be overridden, return actual velocity applied.
+        return acc;
+    }
+    public virtual int LandAction(Vector3 velocity) {
+        // To be overridden, return landing damage.
+        return (int)velocity.sqrMagnitude;
+    }
     public virtual void DieAction() {
         // To be overridden
     }
@@ -130,7 +161,7 @@ public class Unit : MonoBehaviour {
 
 
     public bool isBusy() {
-        return state == State.Attacking || state == State.Casting || state == State.Stunned;
+        return state == State.Attacking || state == State.Casting || state == State.Stunned || state == State.Flying || state == State.Controlled;
     }
 
     public void Stop() {
@@ -140,9 +171,10 @@ public class Unit : MonoBehaviour {
     }
 
     public void ForceStop() {
+        if (state == State.Casting && cast && currentSpecialAttack.lasting) {
+            currentSpecialAttack.Interrupt();
+        }
         state = State.Idle;
-        attackTimer = 0;
-        castTimer = 0;
     }
 
     // if speed is 0, move with default unit move speed.
@@ -167,32 +199,35 @@ public class Unit : MonoBehaviour {
     }
 
     public void Attack(Unit target) {
-        if (!isBusy() && attackTimer <= 0) {
+        if (!isBusy()) {
             state = State.Attacking;
             PreAttackAction(target);
             attackTimer = attackPeriod;
             attackTarget = target;
+            attacked = false;
         }
     }
 
     public void Cast(Unit target, SpecialAttack specialAttack) {
-        if (!isBusy() && castTimer <= 0 && specialAttack.IsUsableNow(target, this)) {
+        specialAttack.target = target;
+        specialAttack.self = this;
+        if (!isBusy() && specialAttack.IsUsableNow()) {
             state = State.Casting;
             currentSpecialAttack = specialAttack;
-            specialAttack.PreAttackAction(target, this);
-            castTimer = specialAttack.attackPeriod;
+            specialAttack.PreAttackAction();
+            castTimer = specialAttack.lasting ? specialAttack.attackDelay : specialAttack.attackPeriod;
             castTarget = target;
+            cast = false;
         }
     }
 
     // if time is 0, interrupt with default unit interrupt duration.
     public void Interrupt(float time = 0) {
         float duration = InterruptAction(time == 0 ? interruptDuration : time);
-        if (duration > 0) {
+        if (duration >= 0) {
+            ForceStop();
             state = State.Stunned;
             interruptTimer = interruptDuration;
-            attackTimer = 0;
-            castTimer = 0;
         }
     }
 
@@ -204,6 +239,30 @@ public class Unit : MonoBehaviour {
             } else if (!nonInterruptive && interruptableByNormalAttack) {
                 Interrupt();
             }
+        }
+    }
+
+    public void SendFlying(Vector3 impulse) {
+        Vector3 acc = impulse / mass;
+        acc = SendFlyingAction(acc);
+        if (acc.sqrMagnitude == 0) return;
+
+        ForceStop();
+        state = State.Flying;
+        flyingVelocity += acc;
+        controller.Move(flyingVelocity * Time.deltaTime);
+    }
+
+    public void Control() {
+        if (!isImmuneToControl) {
+            ForceStop();
+            state = State.Controlled;
+        }
+    }
+
+    public void ReleaseControl() {
+        if (state == State.Controlled) {
+            state = State.Idle;
         }
     }
 

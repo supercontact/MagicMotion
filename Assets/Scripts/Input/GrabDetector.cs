@@ -44,7 +44,6 @@ public class GrabDetector : MonoBehaviour {
             currentDistance -= distanceDropRate * Time.deltaTime;
             currentDistance = Mathf.Max(currentDistance, 0);
         }
-        Debug.Log(currentDistance);
 
         if (image.gameObject.activeSelf && !grabbing) {
             float newAlpha = image.color.a - 2 * Time.deltaTime;

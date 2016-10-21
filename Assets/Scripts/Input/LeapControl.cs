@@ -30,6 +30,7 @@ public class LeapControl : MonoBehaviour {
     public static Vector3 fingerVector;
     public static Vector3 handPoint;
     public static Vector3 handSpeed;
+    public static Vector3 smoothedHandSpeed;
     public static Vector3 palmDirection;
     public static HandState handState;
 
@@ -37,6 +38,7 @@ public class LeapControl : MonoBehaviour {
     public static Vector3 fingerVector2;
     public static Vector3 handPoint2;
     public static Vector3 handSpeed2;
+    public static Vector3 smoothedHandSpeed2;
     public static Vector3 palmDirection2;
     public static HandState handState2;
 
@@ -44,8 +46,8 @@ public class LeapControl : MonoBehaviour {
     public static bool isTracked;
     public static bool isPointing;
 
-    private float fingerBendingAngleThreshold = 90;
-    private float stateChangeDelay = 0.1f;
+    public float fingerBendingAngleThreshold = 90;
+    public float stateChangeDelay = 0.2f;
 
     private Vector3[] cornerPositions;
     private Vector3 center;
@@ -63,6 +65,13 @@ public class LeapControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         control = this;
+        cornerPositions = new Vector3[] {
+            new Vector3(-0.13f, 0.28f, -0.6f),
+            new Vector3(0.13f, 0.28f, -0.6f),
+            new Vector3(0.13f, 0.1f, -0.65f),
+            new Vector3(-0.13f, 0.1f, -0.65f)
+        };
+        UpdateTrackedSpace();
     }
 	
 	// Update is called once per frame
@@ -82,11 +91,10 @@ public class LeapControl : MonoBehaviour {
             if (calibrationIndex >= 4) {
                 UpdateTrackedSpace();
                 calibrationIndex = -1;
-                calibrated = true;
             }
         } else if (calibrated) {
-            UpdateInfo(mainHand, ref fingerPoint, ref fingerVector, ref handPoint, ref handSpeed, ref palmDirection, ref handState, ref nextState, ref stateChangeProgress);
-            UpdateInfo(subHand, ref fingerPoint2, ref fingerVector2, ref handPoint2, ref handSpeed2, ref palmDirection2, ref handState2, ref nextState2, ref stateChangeProgress2);
+            UpdateInfo(mainHand, ref fingerPoint, ref fingerVector, ref handPoint, ref handSpeed, ref smoothedHandSpeed, ref palmDirection, ref handState, ref nextState, ref stateChangeProgress);
+            UpdateInfo(subHand, ref fingerPoint2, ref fingerVector2, ref handPoint2, ref handSpeed2, ref smoothedHandSpeed2, ref palmDirection2, ref handState2, ref nextState2, ref stateChangeProgress2);
         }
 
         pointer.anchoredPosition = fingerPoint;
@@ -130,7 +138,7 @@ public class LeapControl : MonoBehaviour {
         }
     }
 
-    public void UpdateInfo(Hand hand, ref Vector3 fingerPoint, ref Vector3 fingerVector, ref Vector3 handPoint, ref Vector3 handSpeed, ref Vector3 palmDirection, ref HandState handState, ref HandState nextState, ref float stateChangeProgressh) {
+    public void UpdateInfo(Hand hand, ref Vector3 fingerPoint, ref Vector3 fingerVector, ref Vector3 handPoint, ref Vector3 handSpeed, ref Vector3 smoothedHandSpeed, ref Vector3 palmDirection, ref HandState handState, ref HandState nextState, ref float stateChangeProgressh) {
         if (hand != null) {
             Finger finger = GetIndexFinger(hand);
             if (finger != null) {
@@ -140,6 +148,7 @@ public class LeapControl : MonoBehaviour {
             }
             handPoint = TransformPoint(hand.PalmPosition.ToVector3());
             handSpeed = TransformVector(hand.PalmVelocity.ToVector3());
+            smoothedHandSpeed = smoothedHandSpeed * 0.8f + handSpeed * 0.2f;
             palmDirection = TransformVector(hand.PalmNormal.ToVector3()).normalized;
 
             HandState detectedState = getState(hand);
@@ -170,7 +179,7 @@ public class LeapControl : MonoBehaviour {
                 Debug.Log("Index finger not found!");
             } else {
                 cornerPositions[i] = index.Bone(Bone.BoneType.TYPE_DISTAL).NextJoint.ToVector3();
-                Debug.Log("Position get!");
+                Debug.Log("Position get! " + cornerPositions[i].x + " " + cornerPositions[i].y + " " + cornerPositions[i].z);
                 return true;
             }
         }
@@ -196,11 +205,13 @@ public class LeapControl : MonoBehaviour {
         axisY = Vector3.Cross(axisZ, axisX);
 
         scaleFactor = (Screen.width / width + Screen.height / height) / 2;
+        calibrated = true;
     }
 
     public void StartCalibration() {
         cornerPositions = new Vector3[4];
         calibrationIndex = 0;
+        calibrated = false;
     }
 
     public Vector3 TransformPoint(Vector3 p) {

@@ -8,7 +8,8 @@ public class HandUpDetector : MonoBehaviour {
     public static event TriggerHandler OnTrigger;
     public static HandUpDetector detector;
 
-    public float distanceRequired = 500;
+    public float distanceRequired = 300;
+    public float palmAngle = 15;
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
 
@@ -44,7 +45,7 @@ public class HandUpDetector : MonoBehaviour {
 
     private bool handIsUp() {
         if (LeapControl.mainHand == null) return false;
-        return Vector3.Angle(LeapControl.palmDirection, Vector3.up) <= palmDirectionAngleThreshold;
+        return Vector3.Angle(LeapControl.palmDirection, new Vector3(0, Mathf.Cos(palmAngle * Mathf.Deg2Rad), -Mathf.Sin(palmAngle * Mathf.Deg2Rad))) <= palmDirectionAngleThreshold;
     }
 
     private void finish() {
