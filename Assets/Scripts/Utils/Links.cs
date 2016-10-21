@@ -12,7 +12,7 @@ public class Links : MonoBehaviour {
     public GameObject aimMarker;
     public GameObject spikes;
 
-    public Image ligntningImage, starImage, spikeImage, circleImage, flashImage, handImage;
+    public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
 
 
     void Awake() {

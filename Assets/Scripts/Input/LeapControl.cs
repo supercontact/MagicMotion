@@ -298,7 +298,7 @@ public class LeapControl : MonoBehaviour {
         Finger thumb = GetFinger(hand, Finger.FingerType.TYPE_THUMB);
         
         if (IsFingerStraight(index) &&
-            !IsFingerStraight(middle, 120) &&
+            (!IsFingerStraight(middle, 120) || (GetTransformedFingerPosition(index) - GetTransformedFingerPosition(middle)).magnitude < 300) &&
             !IsFingerStraight(ring) &&
             !IsFingerStraight(pinky)) {
             return HandState.Pointing;
