@@ -15,6 +15,7 @@ public class Grabbing : SpecialAttack {
     private GrabbingProjectile projectile;
     private GameObject lockEffect;
     private Vector3 prevHandPoint;
+    private Vector3 relativeTargetPosition;
 
 	public Grabbing() {
         attackPeriod = 0;
@@ -30,7 +31,7 @@ public class Grabbing : SpecialAttack {
     }
 
     public override void AttackAction() {
-        projectile = GameObject.Instantiate(PrefabLinks.links.grabbingProjectile).GetComponent<GrabbingProjectile>();
+        projectile = GameObject.Instantiate(Links.links.grabbingProjectile).GetComponent<GrabbingProjectile>();
         projectile.relatedAttack = this;
         projectile.range = projectileRange;
         projectile.triggerRadius = projectileRadius;
@@ -68,7 +69,8 @@ public class Grabbing : SpecialAttack {
             return;
         }
         grabbedTarget = target;
-        lockEffect = GameObject.Instantiate(PrefabLinks.links.lockEffect);
+        relativeTargetPosition = self.transform.InverseTransformPoint(target.transform.position);
+        lockEffect = GameObject.Instantiate(Links.links.lockEffect);
         lockEffect.transform.SetParent(grabbedTarget.transform, false);
     }
 
@@ -84,7 +86,9 @@ public class Grabbing : SpecialAttack {
             if (grabbedTarget.state != Unit.State.Controlled) {
                 grabbedTarget.Control();
             }
-            grabbedTarget.controller.Move(self.transform.TransformVector(handPoint - prevHandPoint) * movingFactor);
+            relativeTargetPosition += (handPoint - prevHandPoint) * movingFactor;
+            grabbedTarget.controller.Move(self.transform.TransformPoint(relativeTargetPosition) - grabbedTarget.transform.position);
+            relativeTargetPosition = self.transform.InverseTransformPoint(grabbedTarget.transform.position);
         }
         prevHandPoint = handPoint;
     }

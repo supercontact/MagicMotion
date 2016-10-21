@@ -90,15 +90,6 @@ public class TrajectoryDetector : MonoBehaviour {
 
         pointers.RemoveWhere(pointer => pointer.progress < 0);
         prevInput = input;
-
-        if (image.gameObject.activeSelf) {
-            float newAlpha = image.color.a - 2 * Time.deltaTime;
-            if (newAlpha < 0) {
-                image.gameObject.SetActive(false);
-            } else {
-                image.color = new Color(1, 1, 1, newAlpha);
-            }
-        }
     }
 
     // Return remaining time
@@ -188,8 +179,7 @@ public class TrajectoryDetector : MonoBehaviour {
         if (OnTrigger != null) {
             OnTrigger(type);
         }
-        image.gameObject.SetActive(true);
-        image.color = Color.white;
+        OverlayDisplay.ShowImage(image, 0, 0.5f);
     }
 
     public void clear() {

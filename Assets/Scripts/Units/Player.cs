@@ -6,7 +6,7 @@ public class Player : Unit {
     public enum PlayerState
     {
         Normal,
-        Preparing,
+        Slowed,
         Busy
     }
 
@@ -18,31 +18,33 @@ public class Player : Unit {
 
     private AntiGravity skillAntiGravity;
     private Grabbing skillGrabbing;
+    private EarthSpikes skillSpike;
 
     // Use this for initialization
     public override void Start () {
         base.Start();
-        anim = GetComponent<Animator>();
         TrajectoryDetector.OnTrigger += TrajectoryGestureTriggered;
         HandUpDetector.OnTrigger += HandUpGestureTriggered;
         GrabDetector.OnGrab += GrabGestureTriggered;
 
         skillAntiGravity = new AntiGravity();
         skillGrabbing = new Grabbing();
+        skillSpike = new EarthSpikes();
     }
 
     // Update is called once per frame
     public override void Update() {
-
-        if (isBusy()) {
+        if (state == State.Casting) {
+            playerState = PlayerState.Slowed;
+        } else if (isBusy()) {
             playerState = PlayerState.Busy;
-        } else if (playerState == PlayerState.Busy) {
+        } else {
             playerState = PlayerState.Normal;
         }
 
         if (playerState != PlayerState.Busy) {
             Vector3 v = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            v *= (Input.GetKey(KeyCode.LeftShift) || playerState == PlayerState.Preparing) ? speed / 2 : speed;
+            v *= (Input.GetKey(KeyCode.LeftShift) || playerState == PlayerState.Slowed) ? speed / 2 : speed;
 
             float lerp = 1 - Mathf.Exp(-Time.deltaTime * 10);
             if (v != Vector3.zero) {
@@ -66,7 +68,11 @@ public class Player : Unit {
     }
 
     private void TrajectoryGestureTriggered(string type) {
-
+        if (!isBusy()) {
+            if (type == "Spike") {
+                Cast(null, skillSpike);
+            }
+        }
     }
     private void HandUpGestureTriggered() {
         if (!isBusy()) {

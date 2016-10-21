@@ -17,8 +17,6 @@ public class GrabDetector : MonoBehaviour {
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
 
-    public Image image;
-
     private float currentDistance = 0;
 
     // Use this for initialization
@@ -44,15 +42,6 @@ public class GrabDetector : MonoBehaviour {
             currentDistance -= distanceDropRate * Time.deltaTime;
             currentDistance = Mathf.Max(currentDistance, 0);
         }
-
-        if (image.gameObject.activeSelf && !grabbing) {
-            float newAlpha = image.color.a - 2 * Time.deltaTime;
-            if (newAlpha < 0) {
-                image.gameObject.SetActive(false);
-            } else {
-                image.color = new Color(1, 1, 1, newAlpha);
-            }
-        }
     }
 
     private bool handIsRightOpen() {
@@ -68,8 +57,7 @@ public class GrabDetector : MonoBehaviour {
             OnGrab();
         }
         currentDistance = 0;
-        image.gameObject.SetActive(true);
-        image.color = Color.white;
+        OverlayDisplay.ShowImageIndefinately(Links.links.handImage);
     }
 
     private void release() {
@@ -78,5 +66,6 @@ public class GrabDetector : MonoBehaviour {
             OnRelease();
         }
         currentDistance = 0;
+        OverlayDisplay.HideImage(Links.links.handImage, 0.5f);
     }
 }

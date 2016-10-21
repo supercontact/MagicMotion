@@ -33,6 +33,8 @@ public class LeapControl : MonoBehaviour {
     public static Vector3 smoothedHandSpeed;
     public static Vector3 palmDirection;
     public static HandState handState;
+    public static bool isTracked;
+    public static bool isPointing;
 
     public static Vector3 fingerPoint2;
     public static Vector3 fingerVector2;
@@ -41,10 +43,11 @@ public class LeapControl : MonoBehaviour {
     public static Vector3 smoothedHandSpeed2;
     public static Vector3 palmDirection2;
     public static HandState handState2;
+    public static bool isTracked2;
+    public static bool isPointing2;
 
     public static bool rightHanded = true;
-    public static bool isTracked;
-    public static bool isPointing;
+    
 
     public float fingerBendingAngleThreshold = 90;
     public float stateChangeDelay = 0.2f;
@@ -77,7 +80,9 @@ public class LeapControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         isTracked = false;
+        isTracked2 = false;
         isPointing = false;
+        isPointing2 = false;
 
         UpdateHands();
 
@@ -93,8 +98,8 @@ public class LeapControl : MonoBehaviour {
                 calibrationIndex = -1;
             }
         } else if (calibrated) {
-            UpdateInfo(mainHand, ref fingerPoint, ref fingerVector, ref handPoint, ref handSpeed, ref smoothedHandSpeed, ref palmDirection, ref handState, ref nextState, ref stateChangeProgress);
-            UpdateInfo(subHand, ref fingerPoint2, ref fingerVector2, ref handPoint2, ref handSpeed2, ref smoothedHandSpeed2, ref palmDirection2, ref handState2, ref nextState2, ref stateChangeProgress2);
+            UpdateInfo(mainHand, ref fingerPoint, ref fingerVector, ref handPoint, ref handSpeed, ref smoothedHandSpeed, ref palmDirection, ref handState, ref isTracked, ref isPointing, ref nextState, ref stateChangeProgress);
+            UpdateInfo(subHand, ref fingerPoint2, ref fingerVector2, ref handPoint2, ref handSpeed2, ref smoothedHandSpeed2, ref palmDirection2, ref handState2, ref isTracked2, ref isPointing2, ref nextState2, ref stateChangeProgress2);
         }
 
         pointer.anchoredPosition = fingerPoint;
@@ -138,7 +143,8 @@ public class LeapControl : MonoBehaviour {
         }
     }
 
-    public void UpdateInfo(Hand hand, ref Vector3 fingerPoint, ref Vector3 fingerVector, ref Vector3 handPoint, ref Vector3 handSpeed, ref Vector3 smoothedHandSpeed, ref Vector3 palmDirection, ref HandState handState, ref HandState nextState, ref float stateChangeProgressh) {
+    public void UpdateInfo(Hand hand, ref Vector3 fingerPoint, ref Vector3 fingerVector, ref Vector3 handPoint, ref Vector3 handSpeed, ref Vector3 smoothedHandSpeed
+        , ref Vector3 palmDirection, ref HandState handState, ref bool isTracked, ref bool isPointing, ref HandState nextState, ref float stateChangeProgress) {
         if (hand != null) {
             Finger finger = GetIndexFinger(hand);
             if (finger != null) {

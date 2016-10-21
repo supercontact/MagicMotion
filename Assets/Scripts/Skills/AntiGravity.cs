@@ -29,5 +29,6 @@ public class AntiGravity : SpecialAttack {
                 }
             }
         }
+        OverlayDisplay.ShowImage(Links.links.flashImage, 0, 0.5f);
     }
 }
