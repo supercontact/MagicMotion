@@ -6,8 +6,8 @@ public class SimpleProjectile : Projectile {
     public float speed = 10;
     public Vector3 acceleration;
 
-    public override void Start() {
-        base.Start();
+    public override void Awake() {
+        base.Awake();
         body.useGravity = false;
         body.drag = 0;
         body.angularDrag = 0;

@@ -13,8 +13,8 @@ public class GrabbingProjectile : SimpleProjectile {
     private float flarePower;
 
 	// Use this for initialization
-	public override void Start () {
-        base.Start();
+	public override void Awake () {
+        base.Awake();
         flare = GetComponent<LensFlare>();
         flarePower = flare.brightness;
         damage = 0;
@@ -44,6 +44,7 @@ public class GrabbingProjectile : SimpleProjectile {
     }
 
     public override bool HitAction(Unit target, Collision collision) {
+        Debug.Log(target.gameObject);
         if (target != null) {
             relatedAttack.Catch(target);
         }

@@ -11,7 +11,6 @@ public class Unit : MonoBehaviour {
         Attacking,
         Casting,
         Stunned,
-        Flying,
         Controlled
     }
 
@@ -48,6 +47,7 @@ public class Unit : MonoBehaviour {
     private float interruptTimer = 0;
     private float decayTimer = 0;
     private Vector3 flyingVelocity;
+    private bool isFlying;
 
 
     public virtual void Start() {
@@ -104,7 +104,7 @@ public class Unit : MonoBehaviour {
             // Stunned
             if (state == State.Stunned) {
                 interruptTimer -= Time.deltaTime;
-                if (interruptTimer <= 0) {
+                if (interruptTimer <= 0 && !isFlying) {
                     state = State.Idle;
                 }
             }
@@ -122,9 +122,9 @@ public class Unit : MonoBehaviour {
                 flyingVelocity += gravity * Time.deltaTime * Vector3.down;
                 controller.Move(flyingVelocity * Time.deltaTime);
             } else {
-                if (state == State.Flying) {
-                    state = State.Idle;
+                if (isFlying) {
                     LandAction(flyingVelocity);
+                    isFlying = false;
                 }
                 flyingVelocity = Vector3.zero;
             }
@@ -162,7 +162,7 @@ public class Unit : MonoBehaviour {
 
 
     public bool isBusy() {
-        return state == State.Attacking || state == State.Casting || state == State.Stunned || state == State.Flying || state == State.Controlled;
+        return state == State.Attacking || state == State.Casting || state == State.Stunned || state == State.Controlled;
     }
 
     public void Stop() {
@@ -250,9 +250,10 @@ public class Unit : MonoBehaviour {
         if (acc.sqrMagnitude == 0) return;
 
         ForceStop();
-        state = State.Flying;
+        state = State.Stunned;
         flyingVelocity += acc;
         controller.Move(flyingVelocity * Time.deltaTime);
+        isFlying = true;
     }
 
     public void Control() {

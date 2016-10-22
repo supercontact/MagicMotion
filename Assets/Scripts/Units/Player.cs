@@ -20,6 +20,7 @@ public class Player : Unit {
     private Grabbing skillGrabbing;
     private EarthSpikes skillSpike;
     private LightBeam skillBeam;
+    private FireBallSpell skillFireBall;
 
     // Use this for initialization
     public override void Start () {
@@ -32,6 +33,7 @@ public class Player : Unit {
         skillGrabbing = new Grabbing();
         skillSpike = new EarthSpikes();
         skillBeam = new LightBeam();
+        skillFireBall = new FireBallSpell();
     }
 
     // Update is called once per frame
@@ -51,18 +53,20 @@ public class Player : Unit {
             float lerp = 1 - Mathf.Exp(-Time.deltaTime * 10);
             if (v != Vector3.zero) {
                 controller.Move(transform.TransformVector(v) * Time.deltaTime);
-                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (Vector3.Dot(v, transform.forward) / speed) / 2 + 0.5f, lerp));
+                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (v.z / speed) / 2 + 0.5f, lerp));
             } else {
                 anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), 0.5f, lerp));
             }
 
-            Vector3 handPosition = InputManager.GetHandPositionOnScreen();
-            if (handPosition.x < rotateAreaWidth) {
-                float r = 1 - handPosition.x / rotateAreaWidth;
-                transform.rotation = Quaternion.AngleAxis(-r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
-            } else if (handPosition.x > Screen.width - rotateAreaWidth) {
-                float r = 1 - (Screen.width - handPosition.x) / rotateAreaWidth;
-                transform.rotation = Quaternion.AngleAxis(r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
+            if (LeapControl.isTracked) {
+                Vector3 handPosition = LeapControl.GetTargetingPositionOnScreen();
+                if (handPosition.x < rotateAreaWidth) {
+                    float r = 1 - handPosition.x / rotateAreaWidth;
+                    transform.rotation = Quaternion.AngleAxis(-r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
+                } else if (handPosition.x > Screen.width - rotateAreaWidth) {
+                    float r = 1 - (Screen.width - handPosition.x) / rotateAreaWidth;
+                    transform.rotation = Quaternion.AngleAxis(r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
+                }
             }
         }
 
@@ -75,6 +79,8 @@ public class Player : Unit {
                 Cast(null, skillSpike);
             } else if (type == "Cross") {
                 Cast(null, skillBeam);
+            } else if (type == "Circle") {
+                Cast(null, skillFireBall);
             }
         }
     }

@@ -14,6 +14,7 @@ public class Links : MonoBehaviour {
     public GameObject aimLine;
     public GameObject beam;
     public GameObject shockRing;
+    public GameObject fireBall;
 
     public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
 

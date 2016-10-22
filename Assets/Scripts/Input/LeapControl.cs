@@ -157,7 +157,7 @@ public class LeapControl : MonoBehaviour {
             smoothedHandSpeed = smoothedHandSpeed * 0.8f + handSpeed * 0.2f;
             palmDirection = TransformVector(hand.PalmNormal.ToVector3()).normalized;
 
-            HandState detectedState = getState(hand);
+            HandState detectedState = GetState(hand);
             if (detectedState != handState) {
                 if (nextState == detectedState) {
                     stateChangeProgress += Time.deltaTime;
@@ -290,7 +290,7 @@ public class LeapControl : MonoBehaviour {
         return totalAngle < threshold;
     }
 
-    public HandState getState(Hand hand) {
+    public HandState GetState(Hand hand) {
         Finger index = GetFinger(hand, Finger.FingerType.TYPE_INDEX);
         Finger middle = GetFinger(hand, Finger.FingerType.TYPE_MIDDLE);
         Finger ring = GetFinger(hand, Finger.FingerType.TYPE_RING);
@@ -318,6 +318,14 @@ public class LeapControl : MonoBehaviour {
         if (straightFingerCount >= 4) return HandState.Palm;
 
         return HandState.Other;
+    }
+
+    public static Vector3 GetTargetingPositionOnScreen() {
+        if (handState == HandState.Pointing) {
+            return new Vector3(fingerPoint.x + Screen.width / 2, fingerPoint.y + Screen.height / 2, fingerPoint.z);
+        } else {
+            return new Vector3(handPoint.x + Screen.width / 2, handPoint.y + Screen.height / 2, handPoint.z);
+        }
     }
 
 }
