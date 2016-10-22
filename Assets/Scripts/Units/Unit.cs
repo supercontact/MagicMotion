@@ -172,6 +172,7 @@ public class Unit : MonoBehaviour {
 
     public void ForceStop() {
         if (state == State.Casting && cast && currentSpecialAttack.lasting) {
+            state = State.Idle;
             currentSpecialAttack.Interrupt();
         }
         state = State.Idle;

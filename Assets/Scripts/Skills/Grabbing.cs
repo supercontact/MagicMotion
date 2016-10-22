@@ -33,18 +33,17 @@ public class Grabbing : SpecialAttack {
     public override void AttackAction() {
         projectile = GameObject.Instantiate(Links.links.grabbingProjectile).GetComponent<GrabbingProjectile>();
         projectile.relatedAttack = this;
-        projectile.range = projectileRange;
-        projectile.triggerRadius = projectileRadius;
-        projectile.velocity = self.transform.forward * projectileSpeed;
-        projectile.transform.position = self.transform.position + 0.5f * self.transform.forward + 0.5f * Vector3.up;
-        projectile.transform.rotation = self.transform.rotation;
+        projectile.attacker = self;
+        projectile.lifeTime = projectileRange / projectileSpeed;
+        projectile.speed = projectileSpeed;
+        projectile.Launch(self.transform.position + 0.5f * self.transform.forward + 0.5f * Vector3.up, self.transform.forward);
         isActive = true;
     }
 
     public override void Interrupt() {
         if (isActive) {
             if (projectile != null) {
-                projectile.Cancel();
+                projectile.Cancel(true);
                 projectile = null;
             }
             if (grabbedTarget != null) {
