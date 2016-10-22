@@ -96,6 +96,7 @@ public class Unit : MonoBehaviour {
                     cast = true;
                 }
                 if (castTimer <= 0 && !currentSpecialAttack.lasting) {
+                    currentSpecialAttack.EndAction();
                     state = State.Idle;
                 }
             }
@@ -171,7 +172,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void ForceStop() {
-        if (state == State.Casting && cast && currentSpecialAttack.lasting) {
+        if (state == State.Casting) {
             state = State.Idle;
             currentSpecialAttack.Interrupt();
         }
@@ -211,7 +212,7 @@ public class Unit : MonoBehaviour {
 
     public void Cast(Unit target, SpecialAttack specialAttack) {
         specialAttack.target = target;
-        specialAttack.self = this;
+        specialAttack.attacker = this;
         if (!isBusy() && specialAttack.IsUsableNow()) {
             state = State.Casting;
             currentSpecialAttack = specialAttack;

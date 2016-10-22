@@ -16,11 +16,11 @@ public class AntiGravity : SpecialAttack {
         return true;
     }
     public override void AttackAction() {
-        Collider[] collidersInRange = Physics.OverlapSphere(self.transform.position, maxRadius);
+        Collider[] collidersInRange = Physics.OverlapSphere(attacker.transform.position, maxRadius);
         foreach (Collider c in collidersInRange) {
             Unit unitInRange = c.GetComponent<Unit>();
-            if (unitInRange != null && unitInRange.team != self.team) {
-                Vector3 vec = unitInRange.transform.position - self.transform.position;
+            if (unitInRange != null && unitInRange.team != attacker.team) {
+                Vector3 vec = unitInRange.transform.position - attacker.transform.position;
                 Vector3 radialVec = Vector3.ProjectOnPlane(vec, Vector3.up).normalized;
                 float power = 1 - vec.magnitude / maxRadius;
                 if (power > 0) {
@@ -30,5 +30,7 @@ public class AntiGravity : SpecialAttack {
             }
         }
         OverlayDisplay.ShowImage(Links.links.flashImage, 0, 0.5f);
+        GameObject shockRing = GameObject.Instantiate(Links.links.shockRing);
+        shockRing.transform.position = attacker.transform.position;
     }
 }

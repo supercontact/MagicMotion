@@ -33,10 +33,10 @@ public class Grabbing : SpecialAttack {
     public override void AttackAction() {
         projectile = GameObject.Instantiate(Links.links.grabbingProjectile).GetComponent<GrabbingProjectile>();
         projectile.relatedAttack = this;
-        projectile.attacker = self;
+        projectile.attacker = attacker;
         projectile.lifeTime = projectileRange / projectileSpeed;
         projectile.speed = projectileSpeed;
-        projectile.Launch(self.transform.position + 0.5f * self.transform.forward + 0.5f * Vector3.up, self.transform.forward);
+        projectile.Launch(attacker.transform.position + 0.5f * attacker.transform.forward + 0.5f * Vector3.up, attacker.transform.forward);
         isActive = true;
     }
 
@@ -47,7 +47,7 @@ public class Grabbing : SpecialAttack {
                 projectile = null;
             }
             if (grabbedTarget != null) {
-                Vector3 flyingVelocity = self.transform.TransformVector(LeapControl.smoothedHandSpeed * movingFactor);
+                Vector3 flyingVelocity = attacker.transform.TransformVector(LeapControl.smoothedHandSpeed * movingFactor);
                 if (flyingVelocity.magnitude > flyingSpeedLimit) {
                     flyingVelocity = flyingVelocity.normalized * flyingSpeedLimit;
                 }
@@ -63,19 +63,19 @@ public class Grabbing : SpecialAttack {
     public void Catch(Unit target) {
         projectile = null;
         if (target.isImmuneToControl) {
-            self.ForceStop();
+            attacker.ForceStop();
             Interrupt();
             return;
         }
         grabbedTarget = target;
-        relativeTargetPosition = self.transform.InverseTransformPoint(target.transform.position);
+        relativeTargetPosition = attacker.transform.InverseTransformPoint(target.transform.position);
         lockEffect = GameObject.Instantiate(Links.links.lockEffect);
         lockEffect.transform.SetParent(grabbedTarget.transform, false);
     }
 
     public void Miss() {
         projectile = null;
-        self.ForceStop();
+        attacker.ForceStop();
         Interrupt();
     }
 
@@ -86,15 +86,15 @@ public class Grabbing : SpecialAttack {
                 grabbedTarget.Control();
             }
             relativeTargetPosition += (handPoint - prevHandPoint) * movingFactor;
-            grabbedTarget.controller.Move(self.transform.TransformPoint(relativeTargetPosition) - grabbedTarget.transform.position);
-            relativeTargetPosition = self.transform.InverseTransformPoint(grabbedTarget.transform.position);
+            grabbedTarget.controller.Move(attacker.transform.TransformPoint(relativeTargetPosition) - grabbedTarget.transform.position);
+            relativeTargetPosition = attacker.transform.InverseTransformPoint(grabbedTarget.transform.position);
         }
         prevHandPoint = handPoint;
     }
 
     private void ReleaseGestureTriggered() {
         if (isActive) {
-            self.ForceStop();
+            attacker.ForceStop();
             Interrupt();
         }
     }

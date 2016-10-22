@@ -30,16 +30,16 @@ public class EarthSpikes : SpecialAttack {
         aiming = true;
         startTime = Time.time;
         marker = GameObject.Instantiate(Links.links.aimMarker).GetComponent<AimMarker>();
-        marker.transform.position = self.transform.TransformPoint(relativeTargetPosition);
+        marker.transform.position = attacker.transform.TransformPoint(relativeTargetPosition);
         OverlayDisplay.ShowImage(Links.links.spikeImage, 0, 0.5f);
     }
     public override void AttackAction() {
-        Vector3 position = self.transform.TransformPoint(relativeTargetPosition);
+        Vector3 position = attacker.transform.TransformPoint(relativeTargetPosition);
         Collider[] collidersInRange = Physics.OverlapSphere(position, radius);
         foreach (Collider c in collidersInRange) {
             Unit unitInRange = c.GetComponent<Unit>();
-            if (unitInRange != null && unitInRange.team != self.team) {
-                unitInRange.ReceiveDamage(damage, self);
+            if (unitInRange != null && unitInRange.team != attacker.team) {
+                unitInRange.ReceiveDamage(damage, attacker);
                 unitInRange.SendFlying(Vector3.up * impulse);
             }
         }
@@ -59,7 +59,7 @@ public class EarthSpikes : SpecialAttack {
         Vector3 fingerPoint = LeapControl.fingerPoint;
         if (aiming) {
             relativeTargetPosition += Vector3.ProjectOnPlane((fingerPoint - prevFingerPoint) * movingFactor, Vector3.up);
-            marker.transform.position = self.transform.TransformPoint(relativeTargetPosition);
+            marker.transform.position = attacker.transform.TransformPoint(relativeTargetPosition);
             marker.SetProgress((Time.time - startTime) / attackDelay);
         }
         prevFingerPoint = fingerPoint;

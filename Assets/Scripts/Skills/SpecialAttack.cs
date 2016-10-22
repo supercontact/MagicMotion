@@ -8,7 +8,7 @@ public class SpecialAttack {
     public bool lasting = false;
 
     public Unit target;
-    public Unit self;
+    public Unit attacker;
 
     public virtual bool IsUsableNow() {
         // To be overridden
@@ -20,7 +20,10 @@ public class SpecialAttack {
     public virtual void AttackAction() {
         // To be overridden
     }
+    public virtual void EndAction() {
+        // To be overridden
+    }
     public virtual void Interrupt() {
-        // To be overridden, called if lasting and interrupted. 
+        // To be overridden, called if interrupted. 
     }
 }

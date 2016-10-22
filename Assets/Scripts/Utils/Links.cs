@@ -11,6 +11,9 @@ public class Links : MonoBehaviour {
     public GameObject lockEffect;
     public GameObject aimMarker;
     public GameObject spikes;
+    public GameObject aimLine;
+    public GameObject beam;
+    public GameObject shockRing;
 
     public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
 

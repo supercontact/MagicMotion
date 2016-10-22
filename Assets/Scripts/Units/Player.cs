@@ -19,6 +19,7 @@ public class Player : Unit {
     private AntiGravity skillAntiGravity;
     private Grabbing skillGrabbing;
     private EarthSpikes skillSpike;
+    private LightBeam skillBeam;
 
     // Use this for initialization
     public override void Start () {
@@ -30,6 +31,7 @@ public class Player : Unit {
         skillAntiGravity = new AntiGravity();
         skillGrabbing = new Grabbing();
         skillSpike = new EarthSpikes();
+        skillBeam = new LightBeam();
     }
 
     // Update is called once per frame
@@ -71,6 +73,8 @@ public class Player : Unit {
         if (!isBusy()) {
             if (type == "Spike") {
                 Cast(null, skillSpike);
+            } else if (type == "Cross") {
+                Cast(null, skillBeam);
             }
         }
     }
