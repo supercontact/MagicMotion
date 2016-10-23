@@ -9,13 +9,17 @@ public class HPBar : MonoBehaviour {
 	//camera position
 	public Transform cameraMain;
 	public Unit unit;
-	public MeshRenderer bar;
+	public MeshRenderer barRenderer;
+    public Transform bar;
 	 
 
 	// Use this for initialization
 	void Start () {
-		transform.LookAt(cameraMain.transform);
-		transform.localScale = new Vector3(1,1,1);
+        cameraMain = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        unit = GetComponentInParent<Unit>();
+
+        bar.LookAt(cameraMain.transform);
+        bar.localScale = new Vector3(1,1,1);
         if (colorMix == null) {
             colorMix = new ColorMixer();
             colorMix.InsertColorNode(Color.red, 0.2f);
@@ -29,9 +33,9 @@ public class HPBar : MonoBehaviour {
 	void Update () {
 		float hpRatio = (float)unit.HP / unit.maxHP;
 		hpRatio = Mathf.Clamp01 (hpRatio);
-		transform.LookAt(cameraMain.transform); 
-		transform.localScale = new Vector3 (hpRatio, 1, 1);
-		bar.material.color = colorMix.GetColor (hpRatio);
+        bar.LookAt(cameraMain.transform);
+        bar.localScale = new Vector3 (hpRatio, 1, 1);
+        barRenderer.material.color = colorMix.GetColor (hpRatio);
 	}
 }
 

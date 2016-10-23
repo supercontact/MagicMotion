@@ -44,7 +44,6 @@ public class GrabbingProjectile : SimpleProjectile {
     }
 
     public override bool HitAction(Unit target, Collision collision) {
-        Debug.Log(target.gameObject);
         if (target != null) {
             relatedAttack.Catch(target);
         }

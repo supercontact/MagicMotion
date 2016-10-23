@@ -21,6 +21,7 @@ public class Player : Unit {
     private EarthSpikes skillSpike;
     private LightBeam skillBeam;
     private FireBallSpell skillFireBall;
+    private SummonHelper skillSummonHelper;
 
     // Use this for initialization
     public override void Start () {
@@ -34,6 +35,7 @@ public class Player : Unit {
         skillSpike = new EarthSpikes();
         skillBeam = new LightBeam();
         skillFireBall = new FireBallSpell();
+        skillSummonHelper = new SummonHelper();
     }
 
     // Update is called once per frame
@@ -81,6 +83,8 @@ public class Player : Unit {
                 Cast(null, skillBeam);
             } else if (type == "Circle") {
                 Cast(null, skillFireBall);
+            } else if (type == "Star") {
+                Cast(null, skillSummonHelper);
             }
         }
     }

@@ -74,7 +74,7 @@ public class Projectile : MonoBehaviour {
 
     public virtual bool HitAction(Unit target, Collision collision) {
         // To be overridden, if object hit is not a unit then target = null. Return true to inflict damage.
-        return target.team != team;
+        return target == null || target.team != team;
     }
     public virtual void EndAction(bool targetHit) {
         // To be overridden, called when running out of time and not hitting anything. Return true to destroy immediately.

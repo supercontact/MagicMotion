@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class AntiGravity : SpecialAttack {
 
@@ -16,17 +16,14 @@ public class AntiGravity : SpecialAttack {
         return true;
     }
     public override void AttackAction() {
-        Collider[] collidersInRange = Physics.OverlapSphere(attacker.transform.position, maxRadius);
-        foreach (Collider c in collidersInRange) {
-            Unit unitInRange = c.GetComponent<Unit>();
-            if (unitInRange != null && unitInRange.team != attacker.team) {
-                Vector3 vec = unitInRange.transform.position - attacker.transform.position;
-                Vector3 radialVec = Vector3.ProjectOnPlane(vec, Vector3.up).normalized;
-                float power = 1 - vec.magnitude / maxRadius;
-                if (power > 0) {
-                    Vector3 impulse = maxUpImpulse * power * Vector3.up + maxRadialImpulse * power * radialVec;
-                    unitInRange.SendFlying(impulse);
-                }
+        List<Unit> enemiesInRange = Unit.EnemiesInRange(attacker.transform.position, maxRadius, attacker.team);
+        foreach (Unit enemie in enemiesInRange) {
+            Vector3 vec = enemie.transform.position - attacker.transform.position;
+            Vector3 radialVec = Vector3.ProjectOnPlane(vec, Vector3.up).normalized;
+            float power = 1 - vec.magnitude / maxRadius;
+            if (power > 0) {
+                Vector3 impulse = maxUpImpulse * power * Vector3.up + maxRadialImpulse * power * radialVec;
+                enemie.SendFlying(impulse);
             }
         }
         OverlayDisplay.ShowImage(Links.links.flashImage, 0, 0.5f);

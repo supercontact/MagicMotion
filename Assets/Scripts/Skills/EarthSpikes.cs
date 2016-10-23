@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class EarthSpikes : SpecialAttack {
 
@@ -35,13 +35,10 @@ public class EarthSpikes : SpecialAttack {
     }
     public override void AttackAction() {
         Vector3 position = attacker.transform.TransformPoint(relativeTargetPosition);
-        Collider[] collidersInRange = Physics.OverlapSphere(position, radius);
-        foreach (Collider c in collidersInRange) {
-            Unit unitInRange = c.GetComponent<Unit>();
-            if (unitInRange != null && unitInRange.team != attacker.team) {
-                unitInRange.ReceiveDamage(damage, attacker);
-                unitInRange.SendFlying(Vector3.up * impulse);
-            }
+        List<Unit> enemiesInRange = Unit.EnemiesInRange(position, radius, attacker.team);
+        foreach (Unit enemie in enemiesInRange) {
+            enemie.ReceiveDamage(damage, attacker);
+            enemie.SendFlying(Vector3.up * impulse);
         }
         aiming = false;
         GameObject.Destroy(marker.gameObject);

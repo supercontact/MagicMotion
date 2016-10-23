@@ -54,7 +54,7 @@ public class BasicAI : Unit
     }
 
     public override void AttackAction(Unit target) {
-        ReceiveDamage(5, target);
+
     }
 
     public override void DieAction() {

@@ -5,6 +5,7 @@ public class FireBallSpell : SpecialAttack {
 
     public float range = 20;
     public float speed = 10;
+    public int damage = 30;
     public int number = 3;
     public float angle = 15;
 
@@ -20,6 +21,7 @@ public class FireBallSpell : SpecialAttack {
         for (int i = -number + 1; i <= number - 1; i += 2) {
             FireBall fireBall = GameObject.Instantiate(Links.links.fireBall).GetComponent<FireBall>();
             fireBall.attacker = attacker;
+            fireBall.damage = damage;
             fireBall.lifeTime = range / speed;
             fireBall.speed = speed;
             float ang = i * angle / 2;

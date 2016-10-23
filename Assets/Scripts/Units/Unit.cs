@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
 
@@ -50,8 +50,12 @@ public class Unit : MonoBehaviour {
     private bool isFlying;
 
 
-    public virtual void Start() {
+    public virtual void Awake() {
         controller = GetComponent<CharacterController>();
+    }
+
+    public virtual void Start() {
+        
     }
 
     public virtual void Update() {
@@ -277,6 +281,29 @@ public class Unit : MonoBehaviour {
         }
     }
 
+
+
+    public static List<Unit> UnitsInRange(Vector3 position, float range) {
+        Collider[] colliders = Physics.OverlapSphere(position, range);
+        List<Unit> units = new List<Unit>();
+        foreach (Collider c in colliders) {
+            Unit unit = c.GetComponent<Unit>();
+            if (unit != null && Vector3.Distance(unit.transform.position, position) <= range) {
+                units.Add(unit);
+            }
+        }
+        return units;
+    }
+    public static List<Unit> EnemiesInRange(Vector3 position, float range, int team) {
+        List<Unit> units = UnitsInRange(position, range);
+        List<Unit> enemies = units.FindAll(unit => unit.team != team);
+        return enemies;
+    }
+    public static List<Unit> FriendsInRange(Vector3 position, float range, int team) {
+        List<Unit> units = UnitsInRange(position, range);
+        List<Unit> friends = units.FindAll(unit => unit.team == team);
+        return friends;
+    }
 
 
     protected float HorizontalDistance(Vector3 p1, Vector3 p2) {
