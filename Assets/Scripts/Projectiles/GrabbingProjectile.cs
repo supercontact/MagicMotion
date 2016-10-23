@@ -25,8 +25,9 @@ public class GrabbingProjectile : SimpleProjectile {
     public override void Update () {
         base.Update();
         if (!ended) {
-            if (lifeTimer > lifeTime * 0.8f) {
-                float alpha = (lifeTime - lifeTimer) / lifeTime / 0.2f;
+            if (lifeTimer > lifeTime * 0.6f) {
+                float alpha = (lifeTime - lifeTimer) / lifeTime / 0.4f;
+                Debug.Log(alpha);
                 sprite.color = new Color(1, 1, 1, alpha);
                 flare.brightness = flarePower * alpha;
             }

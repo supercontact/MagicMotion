@@ -21,6 +21,7 @@ public class Player : Unit {
     private EarthSpikes skillSpike;
     private LightBeam skillBeam;
     private FireBallSpell skillFireBall;
+    private LightningStrike skillLightning;
     private SummonHelper skillSummonHelper;
     private Heal skillHeal;
 
@@ -38,6 +39,7 @@ public class Player : Unit {
         skillSpike = new EarthSpikes();
         skillBeam = new LightBeam();
         skillFireBall = new FireBallSpell();
+        skillLightning = new LightningStrike();
         skillSummonHelper = new SummonHelper();
         skillHeal = new Heal();
     }
@@ -87,6 +89,8 @@ public class Player : Unit {
                 Cast(null, skillBeam);
             } else if (type == "Circle") {
                 Cast(null, skillFireBall);
+            } else if (type == "Lightning") {
+                Cast(null, skillLightning);
             } else if (type == "Star") {
                 Cast(null, skillSummonHelper);
             } else if (type == "Heal") {
