@@ -31,7 +31,7 @@ public class FireBallSpell : SpecialAttack {
             fireBall.speed = speed;
             float ang = i * angle / 2;
             Vector3 direction = Quaternion.AngleAxis(ang, Vector3.up) * attacker.transform.forward;
-            fireBall.Launch(attacker.transform.position + 0.5f * direction + 0.5f * Vector3.up, direction);
+            fireBall.Launch(attacker.transform.position + 0.5f * direction + attacker.centerHeight * Vector3.up, direction);
         }
     }
 }

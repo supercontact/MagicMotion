@@ -22,6 +22,7 @@ public class Links : MonoBehaviour {
     public GameObject crystalBullet;
     public GameObject magicRing;
     public GameObject damageText;
+    public GameObject healthEffect;
 
     public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
 

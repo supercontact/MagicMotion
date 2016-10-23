@@ -10,6 +10,7 @@ public class BasicAI : Unit
     public bool isAggressive = true;
     public float detectionRange = 10;
     public float attackRange = 1.5f;
+    public int attackDamage = 15;
 
     private float lastThinkTime;
 
@@ -54,7 +55,7 @@ public class BasicAI : Unit
     }
 
     public override void AttackAction(Unit target) {
-
+        target.ReceiveDamage(attackDamage, this);
     }
 
     public override void DieAction() {

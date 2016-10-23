@@ -43,7 +43,7 @@ public class LightBeam : SpecialAttack {
         firing = true;
         damageTimer = 0;
         beam = GameObject.Instantiate(Links.links.beam).GetComponent<BeamEffect>();
-        beam.transform.position = attacker.transform.position + 0.5f * Vector3.up;
+        beam.transform.position = attacker.transform.position + attacker.centerHeight * Vector3.up;
         beam.transform.rotation = attacker.transform.rotation * Quaternion.AngleAxis(angle, Vector3.up);
         beam.transform.localScale = new Vector3(1, 1, range);
         aiming = false;
@@ -71,10 +71,10 @@ public class LightBeam : SpecialAttack {
         Vector3 fingerPoint = LeapControl.fingerPoint;
         angle += (fingerPoint.x - prevFingerPoint.x) * anglePerPixel;
         if (aiming) {
-            aimLine.transform.position = attacker.transform.position + Vector3.up * 0.5f;
+            aimLine.transform.position = attacker.transform.position + attacker.centerHeight * Vector3.up;
             aimLine.transform.rotation = attacker.transform.rotation * Quaternion.AngleAxis(angle, Vector3.up);
         } else if (firing) {
-            beam.transform.position = attacker.transform.position + Vector3.up * 0.5f;
+            beam.transform.position = attacker.transform.position + attacker.centerHeight * Vector3.up;
             beam.transform.rotation = attacker.transform.rotation * Quaternion.AngleAxis(angle, Vector3.up);
             damageTimer -= Time.deltaTime;
             if (damageTimer <= 0) {
@@ -91,10 +91,10 @@ public class LightBeam : SpecialAttack {
     private void RayCastLine(bool inflictDamage) {
         Vector3 startPosition = beam.transform.position;
         Vector3 direction = beam.transform.forward;
-        RaycastHit[] hits = Physics.SphereCastAll(startPosition, radius, direction);
+        RaycastHit[] hits = Physics.SphereCastAll(startPosition, radius, direction, range);
 
         Unit firstEnemy = null;
-        float minDistance = float.MaxValue;
+        float minDistance = range;
         foreach (RaycastHit hit in hits) {
             Unit unit = hit.collider.GetComponent<Unit>();
             if ((unit == null || unit.team != attacker.team) && hit.distance < minDistance) {
@@ -103,6 +103,11 @@ public class LightBeam : SpecialAttack {
             }
         }
         beam.transform.localScale = new Vector3(1, 1, minDistance);
+        if (minDistance < range) {
+            beam.ParticlesOn();
+        } else {
+            beam.ParticlesOff();
+        }
         if (inflictDamage && firstEnemy != null) {
             firstEnemy.ReceiveDamage(damagePerTick, attacker);
         }

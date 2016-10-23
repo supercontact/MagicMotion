@@ -36,7 +36,7 @@ public class Grabbing : SpecialAttack {
         projectile.attacker = attacker;
         projectile.lifeTime = projectileRange / projectileSpeed;
         projectile.speed = projectileSpeed;
-        projectile.Launch(attacker.transform.position + 0.5f * attacker.transform.forward + 0.5f * Vector3.up, attacker.transform.forward);
+        projectile.Launch(attacker.transform.position + 0.5f * attacker.transform.forward + attacker.centerHeight * Vector3.up, attacker.transform.forward);
         isActive = true;
     }
 

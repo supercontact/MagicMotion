@@ -22,10 +22,13 @@ public class Player : Unit {
     private LightBeam skillBeam;
     private FireBallSpell skillFireBall;
     private SummonHelper skillSummonHelper;
+    private Heal skillHeal;
 
     // Use this for initialization
     public override void Start () {
         base.Start();
+        interruptableByNormalAttack = false;
+
         TrajectoryDetector.OnTrigger += TrajectoryGestureTriggered;
         HandUpDetector.OnTrigger += HandUpGestureTriggered;
         GrabDetector.OnGrab += GrabGestureTriggered;
@@ -36,6 +39,7 @@ public class Player : Unit {
         skillBeam = new LightBeam();
         skillFireBall = new FireBallSpell();
         skillSummonHelper = new SummonHelper();
+        skillHeal = new Heal();
     }
 
     // Update is called once per frame
@@ -85,6 +89,8 @@ public class Player : Unit {
                 Cast(null, skillFireBall);
             } else if (type == "Star") {
                 Cast(null, skillSummonHelper);
+            } else if (type == "Heal") {
+                Cast(this, skillHeal);
             }
         }
     }

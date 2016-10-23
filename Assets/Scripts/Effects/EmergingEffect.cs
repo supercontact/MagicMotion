@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpikesEffect : MonoBehaviour {
+public class EmergingEffect : MonoBehaviour {
 
     public float riseHeight = 2.5f;
     public float riseDuration = 0.1f;

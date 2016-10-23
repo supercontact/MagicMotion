@@ -18,6 +18,8 @@ public class Unit : MonoBehaviour {
     public int maxHP = 100;
     public int HP = 100;
     public float mass = 1;
+    public float height = 1;
+    public float centerHeight = 0.5f;
     public float gravity = 5;
     public float moveSpeed = 1;
     public float currentMoveSpeed = 1;
@@ -30,6 +32,8 @@ public class Unit : MonoBehaviour {
     public bool isImmuneToControl = false;
     public bool isDead = false;
     public bool isInvincible = false;
+    public GameObject damageTextPrefab;
+
     public State state = State.Idle;
     public Vector3 moveTargetPoint;
     public Unit moveTargetUnit;
@@ -55,7 +59,9 @@ public class Unit : MonoBehaviour {
     }
 
     public virtual void Start() {
-        
+        if (damageTextPrefab == null) {
+            damageTextPrefab = Links.links.damageText;
+        }
     }
 
     public virtual void Update() {
@@ -166,7 +172,7 @@ public class Unit : MonoBehaviour {
 
 
     public bool isBusy() {
-        return state == State.Attacking || state == State.Casting || state == State.Stunned || state == State.Controlled;
+        return isDead || state == State.Attacking || state == State.Casting || state == State.Stunned || state == State.Controlled;
     }
 
     public void Stop() {
@@ -246,7 +252,7 @@ public class Unit : MonoBehaviour {
             } else if (!nonInterruptive && interruptableByNormalAttack) {
                 Interrupt();
             }
-            DamageTextEffect text = GameObject.Instantiate(Links.links.damageText).GetComponent<DamageTextEffect>();
+            DamageTextEffect text = GameObject.Instantiate(damageTextPrefab).GetComponent<DamageTextEffect>();
             text.SetPosition(transform.position + Vector3.up * 1);
             text.SetText(realDamage.ToString());
         }

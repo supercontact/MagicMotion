@@ -121,7 +121,7 @@ public class Helper : Unit {
         bullet.lifeTime = bulletRange / bulletSpeed;
         bullet.speed = bulletSpeed;
         Vector3 direction = (target.transform.position - transform.position).normalized;
-        bullet.Launch(transform.position + 0.5f * direction + 1f * Vector3.up, direction);
+        bullet.Launch(transform.position + 0.5f * direction + centerHeight * Vector3.up, direction);
     }
 
     public override void DieAction() {
