@@ -6,6 +6,8 @@ public class Links : MonoBehaviour {
 
     public static Links links;
 
+    public Canvas canvas;
+
     public GameObject enemy1;
     public GameObject helper1;
     public GameObject grabbingProjectile;
@@ -19,6 +21,7 @@ public class Links : MonoBehaviour {
     public GameObject explosion;
     public GameObject crystalBullet;
     public GameObject magicRing;
+    public GameObject damageText;
 
     public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
 

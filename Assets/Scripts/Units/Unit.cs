@@ -238,13 +238,17 @@ public class Unit : MonoBehaviour {
     }
 
     public void ReceiveDamage(int damage, Unit attacker, bool nonInterruptive = false) {
-        if (!isInvincible) {
-            HP -= ReceiveDamageAction(damage, attacker);
+        if (!isInvincible && !isDead) {
+            int realDamage = ReceiveDamageAction(damage, attacker);
+            HP -= realDamage;
             if (HP <= 0) {
                 Kill();
             } else if (!nonInterruptive && interruptableByNormalAttack) {
                 Interrupt();
             }
+            DamageTextEffect text = GameObject.Instantiate(Links.links.damageText).GetComponent<DamageTextEffect>();
+            text.SetPosition(transform.position + Vector3.up * 1);
+            text.SetText(realDamage.ToString());
         }
     }
 
