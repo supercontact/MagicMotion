@@ -27,9 +27,6 @@ public class Helper : Unit {
 
     public GameObject Crystal;
 
-
-    private float lastThinkTime;
-
     public override void Awake() {
         base.Awake();
     }

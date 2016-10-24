@@ -1,46 +1,66 @@
-﻿using UnityEngine;  
-using System.Collections;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-public class BasicAI : Unit
-{
+public class BasicAI : Unit {
 
-    public Unit hero;
-    public float wanderSpeed = 2;
-    public float thinkPeriod = 2;
-    public bool isAggressive = true;
-    public float detectionRange = 10;
+    public enum AIState
+    {
+        Idle,
+        Attacking,
+        Busy
+    }
+
+    public int attackDamage = 10;
+    public float detectionRange = 10f;
     public float attackRange = 1.5f;
-    public int attackDamage = 15;
 
-    private float lastThinkTime;
+    public AIState aiState = AIState.Idle;
+    public Unit hostileTarget;
 
+    public override void Awake() {
+        base.Awake();
+    }
 
     public override void Start() {
         base.Start();
     }
 
     public override void Update() {
+
+        if (isBusy() && state != State.Attacking) {
+            aiState = AIState.Busy;
+        } else if (aiState == AIState.Busy) {
+            aiState = AIState.Idle;
+        }
+
         if (!isDead) {
-            if (Vector3.Distance(transform.position, hero.transform.position) < detectionRange && isAggressive) {
-                if (Vector3.Distance(transform.position, hero.transform.position) > attackRange) {
-                    Pursue(hero);
+            if (aiState != AIState.Busy) {
+                if (hostileTarget == null) {
+                    List<Unit> enemies = Unit.EnemiesInRange(transform.position, detectionRange, team);
+                    if (enemies.Count > 0) {
+                        float closestDistance = float.MaxValue;
+                        Unit closestEnemy = null;
+                        foreach (Unit enemy in enemies) {
+                            float distance = Vector3.Distance(enemy.transform.position, transform.position);
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestEnemy = enemy;
+                            }
+                        }
+                        hostileTarget = closestEnemy;
+                        aiState = AIState.Attacking;
+                    }
                 } else {
-                    Attack(hero);
-                }
-            } else {
-                if (Time.time - lastThinkTime > thinkPeriod) {
-                    lastThinkTime = Time.time;
-
-                    int rnd = Random.Range(0, 2);
-                    switch (rnd) {
-                    case 0:
-                        Stop();
-                        break;
-
-                    case 1:
-                        Quaternion rot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
-                        Move(rot * Vector3.forward, wanderSpeed);
-                        break;
+                    if (hostileTarget.isDead || Vector3.Distance(hostileTarget.transform.position, transform.position) > detectionRange) {
+                        hostileTarget = null;
+                        aiState = AIState.Idle;
+                    } else if (Vector3.Distance(hostileTarget.transform.position, transform.position) > attackRange) {
+                        pursueDistance = 0;
+                        Pursue(hostileTarget);
+                        aiState = AIState.Attacking;
+                    } else {
+                        Attack(hostileTarget);
+                        aiState = AIState.Attacking;
                     }
                 }
             }
@@ -51,7 +71,7 @@ public class BasicAI : Unit
     }
 
     public override void PreAttackAction(Unit target) {
-        
+
     }
 
     public override void AttackAction(Unit target) {
@@ -59,7 +79,6 @@ public class BasicAI : Unit
     }
 
     public override void DieAction() {
-        
-    }
 
+    }
 }

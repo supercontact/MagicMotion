@@ -17,12 +17,12 @@ public class SimpleProjectile : Projectile {
         body.AddForce(acceleration, ForceMode.Acceleration);
     }
 
-    public void Launch(Vector3 initialPosition, Vector3 direction) {
+    public virtual void Launch(Vector3 initialPosition, Vector3 direction) {
         transform.position = initialPosition;
         transform.rotation = Quaternion.LookRotation(direction);
         body.velocity = speed * direction.normalized;
     }
-    public void LaunchAt(Vector3 initialPosition, Vector3 targetPosition) {
+    public virtual void LaunchAt(Vector3 initialPosition, Vector3 targetPosition) {
         Launch(initialPosition, targetPosition - initialPosition);
     }
 
