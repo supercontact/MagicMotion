@@ -27,7 +27,9 @@ public class Links : MonoBehaviour {
     public GameObject lightningMark;
 
     public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
-
+	public GameObject Bullet;
+	public GameObject BulletM;
+	public GameObject SmallAI;
 
     void Awake() {
         links = this;

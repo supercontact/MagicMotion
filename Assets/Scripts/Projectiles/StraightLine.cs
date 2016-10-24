@@ -31,10 +31,6 @@ public class StraightLine :  SimpleProjectile {
 			Destroy (gameObject, 1);
 		}
 	}
-
-	public void updateSpeed(){
 		
-	}
-
 
 }
