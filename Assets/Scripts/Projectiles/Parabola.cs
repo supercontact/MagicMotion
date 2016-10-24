@@ -23,8 +23,6 @@ public class Parabola : MonoBehaviour {
 	private float distanceToTarget;
 	private float remainingDistance;
 	private float distanceMaxX;
-	private float distanceMin = 0.0f;
-
 	private double angle; 
 
 	private double speedX;
@@ -33,7 +31,8 @@ public class Parabola : MonoBehaviour {
 	private float distanceMaxY;
 	private float flyTime;
 	private float currentTime;
-
+	private float dropTime = 0;
+	private Vector3 speedMax;
 	// Use this for initialization
 	void Start () {
 		controller = GetComponent<CharacterController>();
@@ -48,11 +47,12 @@ public class Parabola : MonoBehaviour {
 		distanceMaxX = (float)speedX * flyTime;
 		remainingDistance = distanceToTarget < distanceMaxX ? distanceToTarget : distanceMaxX;
 		currentTime = 0;
+		speedMax = (float)speedInit * Mathf.Cos (Mathf.PI * 32 / 180)*Vector3.up + (float)speedInit * Mathf.Sin (Mathf.PI * 32 / 180) * (targetPosition-positionInit).normalized;
 
 		Debug.Log ("distanceMAx "+distanceMaxX + "distanceToTarget"+distanceToTarget);
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -93,26 +93,16 @@ public class Parabola : MonoBehaviour {
 				}
 			}
 			else  {
-				controller.Move (  5 * Time.deltaTime * Time.deltaTime * Vector3.down);
+				dropTime += Time.deltaTime;
+				controller.Move (5 * dropTime * dropTime * Vector3.down);
 				return;
 			}
 
 
 		} else {
-			if (remainingDistance == 0) {
-				controller.Move(5 * Vector3.down * Time.deltaTime * Time.deltaTime);
-				return;
-			}
-			float moveDistanceX = (float)speedX * Time.deltaTime;
-			float moveDistanceY = (float)( -g * currentTime * Time.deltaTime - 0.5 * g * Time.deltaTime * Time.deltaTime + speedX * Time.deltaTime);
-			if (remainingDistance <= moveDistanceX) {
-				controller.Move (moveDistanceY * Vector3.down + remainingDistance * (targetPosition - positionInit).normalized);
-				remainingDistance = 0;
-				transform.localScale = new Vector3 (0.2f, 0.2f, 0.2f);
-				isAttacked = true;
-			} else {
-				controller.Move (moveDistanceY * Vector3.down + moveDistanceX * (targetPosition - positionInit).normalized);
-				remainingDistance -= moveDistanceX;
+			speedMax += (float)g * Vector3.down * Time.deltaTime;
+			if (transform.position.y >0.4 ) {
+				controller.Move (speedMax * Time.deltaTime);
 			}
 
 		}

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TrajectoryOfBullet: MonoBehaviour
+public class StraightLine2: MonoBehaviour
 {
 	public Unit target;
 	public Unit attacker;
