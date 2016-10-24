@@ -179,7 +179,9 @@ public class TrajectoryDetector : MonoBehaviour {
         if (OnTrigger != null) {
             OnTrigger(type);
         }
-        OverlayDisplay.ShowImage(image, 0, 0.5f);
+        if (image != null) {
+            OverlayDisplay.ShowImage(image, 0, 0.5f);
+        }
     }
 
     public void clear() {

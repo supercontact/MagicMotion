@@ -12,7 +12,6 @@ public class GrabDetector : MonoBehaviour {
 
     public float distanceRequired = 300;
     public float distanceDropRate = 1500;
-    public float timePeriod = 1;
     public float palmAngle = 30;
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
