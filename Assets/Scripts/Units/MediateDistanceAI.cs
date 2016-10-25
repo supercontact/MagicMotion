@@ -13,7 +13,7 @@ public class MediateDistanceAI : WanderingBasicAI {
 	}
 
 	public override void AttackAction(Unit target) {
-		StraightLine bullet = GameObject.Instantiate(Links.links.BulletM).GetComponent<StraightLine>();
+        SimpleProjectile bullet = Instantiate(Links.links.SmallBullet).GetComponent<SimpleProjectile>();
 		bullet.attacker = this;
 		bullet.team = team;
 		bullet.damage = attackDamage;

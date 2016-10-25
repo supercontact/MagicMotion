@@ -18,6 +18,8 @@ public class TrajectoryDetector : MonoBehaviour {
     public float pathOvershootFactor = 0.25f;
 
     public bool initVisualization = false;
+    public Vector3 visualizationCenter = new Vector3(0, 0, 50);
+    public float visualizationScaler = 0.01f;
 
     public GameObject sphere;
     public GameObject cylinder;
@@ -125,7 +127,6 @@ public class TrajectoryDetector : MonoBehaviour {
                     pointer.progress++;
                     pointer.overshoot = 0;
                 } else if (pointer.progress >= 2 && pointer.overshoot > (center - path[pointer.progress / 2 - 1]).magnitude * jointOvershootFactor) {
-                    //Debug.Log(pointer.overshoot + " " + (center - path[pointer.progress / 2 - 1]).magnitude * jointOvershootFactor);
                     pointer.progress = -1;
                 }
                 return Vector3.zero;
@@ -201,19 +202,19 @@ public class TrajectoryDetector : MonoBehaviour {
         for (int i = 0; i < path.Length; i++) {
             GameObject newSphere = Instantiate(sphere);
             newSphere.transform.position = VisualizationTransform(path[i]);
-            newSphere.transform.localScale = Vector3.one * (jointRadius / 100 / 0.5f);
+            newSphere.transform.localScale = Vector3.one * (jointRadius * visualizationScaler / 0.5f);
         }
         for (int i = 0; i < path.Length - 1; i++) {
             GameObject newCylinder = Instantiate(cylinder);
             Vector3 dir = path[i + 1] - path[i];
             newCylinder.transform.position = VisualizationTransform(path[i]);
             newCylinder.transform.rotation = Quaternion.LookRotation(dir);
-            newCylinder.transform.localScale = new Vector3(pathRadius / 100 / 0.5f, pathRadius / 100 / 0.5f, dir.magnitude / 100 / 2);
+            newCylinder.transform.localScale = new Vector3(pathRadius * visualizationScaler / 0.5f, pathRadius * visualizationScaler / 0.5f, dir.magnitude * visualizationScaler / 2);
         }
     }
 
     public Vector3 VisualizationTransform(Vector3 pos) {
-        return pos / 100 + Vector3.forward * 20;
+        return pos * visualizationScaler + visualizationCenter;
     }
 
     private class SimulatedPointer {

@@ -18,16 +18,16 @@ public class BigAI : WanderingBasicAI {
 
 	public override void DieAction() {
 		base.DieAction ();
-		WanderingBasicAI smallAI1 = Instantiate(Links.links.SmallAI).GetComponent<WanderingBasicAI>();
+		WanderingBasicAI smallAI1 = Instantiate(Links.links.SmallEnemy).GetComponent<WanderingBasicAI>();
 		smallAI1.transform.position = transform.position + Vector3.left * 1;
 		smallAI1.transform.rotation = transform.rotation;
-		WanderingBasicAI smallAI2 = GameObject.Instantiate(Links.links.SmallAI).GetComponent<WanderingBasicAI>();
+		WanderingBasicAI smallAI2 = GameObject.Instantiate(Links.links.SmallEnemy).GetComponent<WanderingBasicAI>();
 		smallAI2.transform.position = transform.position + Vector3.right * 1;
 		smallAI2.transform.rotation = transform.rotation;
-		WanderingBasicAI smallAI3 = GameObject.Instantiate(Links.links.SmallAI).GetComponent<WanderingBasicAI>();
+		WanderingBasicAI smallAI3 = GameObject.Instantiate(Links.links.SmallEnemy).GetComponent<WanderingBasicAI>();
 		smallAI3.transform.position = transform.position + Vector3.forward * 1;
 		smallAI3.transform.rotation = transform.rotation;
-		WanderingBasicAI smallAI4 = GameObject.Instantiate(Links.links.SmallAI).GetComponent<WanderingBasicAI>();
+		WanderingBasicAI smallAI4 = GameObject.Instantiate(Links.links.SmallEnemy).GetComponent<WanderingBasicAI>();
 		smallAI4.transform.position = transform.position + Vector3.back * 1;
 		smallAI4.transform.rotation = transform.rotation;
 	}

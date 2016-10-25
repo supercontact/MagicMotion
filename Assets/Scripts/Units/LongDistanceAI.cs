@@ -13,14 +13,14 @@ public class LongDistanceAI : WanderingBasicAI {
 	}
 
 	public override void AttackAction(Unit target) {
-		ParabolicProjectile bullet = GameObject.Instantiate(Links.links.Bullet).GetComponent<ParabolicProjectile>();
+		ParabolicProjectile bullet = GameObject.Instantiate(Links.links.StoneProjectile).GetComponent<ParabolicProjectile>();
 		bullet.attacker = this;
 		bullet.team = team;
 		bullet.damage = attackDamage;
 		bullet.lifeTime = bulletRange / bulletSpeed;
 		bullet.speed = bulletSpeed;
 
-		int mode = Random.Range(0,3);
+		int mode = Random.Range(0,4);
 		switch (mode) {
 		case 0:
 			bullet.launchMode = ParabolicProjectile.LaunchMode.FixedHeight;
@@ -29,12 +29,12 @@ public class LongDistanceAI : WanderingBasicAI {
 			bullet.launchMode = ParabolicProjectile.LaunchMode.FixedAngle;
 			break;
 		case 2:
-			bullet.launchMode = ParabolicProjectile.LaunchMode.FixedSpeed;
+			bullet.launchMode = ParabolicProjectile.LaunchMode.FixedSpeedHighTrajectory;
 			break;
-		default:
-			bullet.launchMode = ParabolicProjectile.LaunchMode.FixedHeight;
-			break;
-		}
+        case 3:
+            bullet.launchMode = ParabolicProjectile.LaunchMode.FixedSpeedLowTrajectory;
+            break;
+        }
 
 		bullet.LaunchAt(transform.position + centerHeight * Vector3.up, target.transform.position + target.centerHeight * Vector3.up);
 	}

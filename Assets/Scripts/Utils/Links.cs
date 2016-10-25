@@ -10,7 +10,13 @@ public class Links : MonoBehaviour {
 
     public GameObject enemy1;
     public GameObject helper1;
+    public GameObject SmallEnemy;
+    public GameObject BigEnemy;
+    public GameObject ThrowingEnemy;
+    public GameObject ShootingEnemy;
     public GameObject grabbingProjectile;
+    public GameObject StoneProjectile;
+    public GameObject SmallBullet;
     public GameObject lockEffect;
     public GameObject aimMarker;
     public GameObject spikes;
@@ -26,10 +32,8 @@ public class Links : MonoBehaviour {
     public GameObject lightning;
     public GameObject lightningMark;
 
+
     public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
-	public GameObject Bullet;
-	public GameObject BulletM;
-	public GameObject SmallAI;
 
     void Awake() {
         links = this;

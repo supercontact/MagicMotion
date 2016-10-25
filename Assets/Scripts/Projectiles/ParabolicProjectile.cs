@@ -7,7 +7,8 @@ public class ParabolicProjectile : SimpleProjectile {
 	{
 		FixedHeight,
 		FixedAngle,
-		FixedSpeed
+		FixedSpeedHighTrajectory,
+        FixedSpeedLowTrajectory
 	}
 
 	public Unit target;
@@ -59,19 +60,19 @@ public class ParabolicProjectile : SimpleProjectile {
 		Launch (initialPosition, speedVec);
 	}
 
-	public void LaunchWithFixedSpeed(Vector3 initialPosition ,Vector3 targetPosition){
+	public void LaunchWithFixedSpeed(Vector3 initialPosition, Vector3 targetPosition, bool lowerTrajectory = true){
 		Vector3 directionX = Vector3.ProjectOnPlane (targetPosition - initialPosition, Vector3.up);
 		float distanceX = Vector3.ProjectOnPlane (targetPosition - initialPosition, Vector3.up).magnitude;
 
 		float param1 = g * distanceX * distanceX / (defaultSpeed * defaultSpeed) + initialPosition.y;
 		float param2 = Mathf.Sqrt (distanceX * distanceX + initialPosition.y * initialPosition.y);
-		float angleTotal = Mathf.Asin (param1 / param2);
-		float belta = Mathf.Asin (-initialPosition.y / param2);
-		float angle = (angleTotal - belta);
-		float cosalphe = Mathf.Cos(angle);
-		float sinalphe = Mathf.Sin(angle);
+		float angleTotal = lowerTrajectory ? Mathf.Asin (param1 / param2) : Mathf.PI - Mathf.Asin(param1 / param2);
+        float beta = Mathf.Atan2(-initialPosition.y, distanceX);
+		float angle = (angleTotal - beta) / 2;
+		float cosAlpha = Mathf.Cos(angle);
+		float sinAlpha = Mathf.Sin(angle);
 		speed = defaultSpeed;
-		speedVec = directionX.normalized * speed * cosalphe + speed * sinalphe * Vector3.up;
+		speedVec = directionX.normalized * speed * cosAlpha + speed * sinAlpha * Vector3.up;
 		Launch (initialPosition, speedVec);
 	}
 
@@ -80,27 +81,21 @@ public class ParabolicProjectile : SimpleProjectile {
 		switch (launchMode) {
 		case LaunchMode.FixedHeight:
 			LaunchWithFixedHeight (initialPosition, targetPosition);
-			Debug.Log ("fixed height");
 			break;
 		case LaunchMode.FixedAngle:
 			LaunchWithFixedAngle (initialPosition, targetPosition);
-			Debug.Log ("fixed angle");
 			break;
-		case LaunchMode.FixedSpeed:
-			LaunchWithFixedSpeed (initialPosition, targetPosition);
-			Debug.Log ("fixed speed");
+		case LaunchMode.FixedSpeedHighTrajectory:
+			LaunchWithFixedSpeed (initialPosition, targetPosition, false);
 			break;
-		default:
+        case LaunchMode.FixedSpeedLowTrajectory:
+            LaunchWithFixedSpeed(initialPosition, targetPosition, true);
+            break;
+        default:
 			Launch (initialPosition, targetPosition);
 			break;		
 		}
 
 	}
 
-
-//	public override void FixedUpdate() {
-//		base.FixedUpdate ();
-//		body.velocity = speedVec;
-//		Debug.Log (speedVec);
-//	}
 }
