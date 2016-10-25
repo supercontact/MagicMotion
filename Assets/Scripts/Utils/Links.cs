@@ -14,9 +14,11 @@ public class Links : MonoBehaviour {
     public GameObject BigEnemy;
     public GameObject ThrowingEnemy;
     public GameObject ShootingEnemy;
+	public GameObject HomingEnemy;
     public GameObject grabbingProjectile;
     public GameObject StoneProjectile;
     public GameObject SmallBullet;
+	public GameObject HomingBullet;
     public GameObject lockEffect;
     public GameObject aimMarker;
     public GameObject spikes;
