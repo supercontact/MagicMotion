@@ -10,7 +10,6 @@ public class Player : Unit {
         Busy
     }
 
-    public float speed = 3f;
     public Animator anim;
     public float rotateAreaWidth = 300;
     public float maxRotationSpeed = 90;
@@ -24,6 +23,7 @@ public class Player : Unit {
     private LightningStrike skillLightning;
     private SummonHelper skillSummonHelper;
     private Heal skillHeal;
+    private IncreaseSpeed skillIncreaseSpeed;
 
     // Use this for initialization
     public override void Start () {
@@ -42,6 +42,7 @@ public class Player : Unit {
         skillLightning = new LightningStrike();
         skillSummonHelper = new SummonHelper();
         skillHeal = new Heal();
+        skillIncreaseSpeed = new IncreaseSpeed();
     }
 
     // Update is called once per frame
@@ -56,12 +57,12 @@ public class Player : Unit {
 
         if (playerState != PlayerState.Busy) {
             Vector3 v = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            v *= (Input.GetKey(KeyCode.LeftShift) || playerState == PlayerState.Slowed) ? speed / 2 : speed;
+            v *= (Input.GetKey(KeyCode.LeftShift) || playerState == PlayerState.Slowed) ? moveSpeed / 2 : moveSpeed;
 
             float lerp = 1 - Mathf.Exp(-Time.deltaTime * 10);
             if (v != Vector3.zero) {
                 controller.Move(transform.TransformVector(v) * Time.deltaTime);
-                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (v.z / speed) / 2 + 0.5f, lerp));
+                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (v.z / moveSpeed) / 2 + 0.5f, lerp));
             } else {
                 anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), 0.5f, lerp));
             }
@@ -81,6 +82,10 @@ public class Player : Unit {
         base.Update();
     }
 
+    public override void DieAction() {
+        Links.links.gameOver.SetActive(true);
+    }
+
     private void TrajectoryGestureTriggered(string type) {
         if (!isBusy()) {
             if (type == "Spike") {
@@ -95,6 +100,8 @@ public class Player : Unit {
                 Cast(null, skillSummonHelper);
             } else if (type == "Heal") {
                 Cast(this, skillHeal);
+            } else if (type == "Infinity") {
+                Cast(this, skillIncreaseSpeed);
             }
         }
     }

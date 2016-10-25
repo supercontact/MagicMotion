@@ -10,9 +10,7 @@ public class BasicAI : Unit {
         Busy
     }
 
-    public int attackDamage = 10;
     public float detectionRange = 10f;
-    public float attackRange = 1.5f;
 
     public AIState aiState = AIState.Idle;
     public Unit hostileTarget;

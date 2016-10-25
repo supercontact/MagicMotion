@@ -23,8 +23,10 @@ public class Unit : MonoBehaviour {
     public float gravity = 5;
     public float moveSpeed = 1;
     public float currentMoveSpeed = 1;
+    public int attackDamage = 10;
     public float attackPeriod = 1;
     public float attackDelay = 0.5f;
+    public float attackRange = 1.5f;
     public float interruptDuration = 0.5f;
     public bool interruptableByNormalAttack = true;
     public float pursueDistance = 0;
@@ -234,6 +236,7 @@ public class Unit : MonoBehaviour {
             attackTimer = attackPeriod;
             attackTarget = target;
             attacked = false;
+            targetRotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(target.transform.position - transform.position, Vector3.up));
         }
     }
 

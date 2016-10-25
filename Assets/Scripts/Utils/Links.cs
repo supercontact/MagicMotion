@@ -17,6 +17,7 @@ public class Links : MonoBehaviour {
     public GameObject grabbingProjectile;
     public GameObject StoneProjectile;
     public GameObject SmallBullet;
+    public GameObject crystalBullet;
     public GameObject lockEffect;
     public GameObject aimMarker;
     public GameObject spikes;
@@ -25,15 +26,16 @@ public class Links : MonoBehaviour {
     public GameObject shockRing;
     public GameObject fireBall;
     public GameObject explosion;
-    public GameObject crystalBullet;
     public GameObject magicRing;
-    public GameObject damageText;
-    public GameObject healthEffect;
     public GameObject lightning;
     public GameObject lightningMark;
+    public GameObject healthEffect;
+    public GameObject speedEffect;
+    public GameObject damageText;
 
 
-    public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, flashImage, handImage;
+    public Image ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, infinityImage, flashImage, handImage;
+    public GameObject gameOver;
 
     void Awake() {
         links = this;

@@ -12,11 +12,9 @@ public class Helper : Unit {
     }
 
     public Unit master;
-    public int attackDamage = 10;
     public float bulletRange = 8f;
     public float bulletSpeed = 8f;
     public float detectionRange = 10f;
-    public float attackRange = 6f;
     public float attackMovingRange = 6f;
     public float attackReturnRange = 5f;
     public float startFollowRange = 3f;
