@@ -99,15 +99,8 @@ public class Helper : Unit {
                     helperState = HelperState.Following;
                 }
             }
-            Crystal.transform.localRotation = Quaternion.AngleAxis(90 * Time.deltaTime, Vector3.up) * Crystal.transform.localRotation;
-        } else {
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
         base.Update();
-    }
-
-    public override void PreAttackAction(Unit target) {
-
     }
 
     public override void AttackAction(Unit target) {
@@ -121,7 +114,4 @@ public class Helper : Unit {
         bullet.Launch(transform.position + 0.5f * direction + centerHeight * Vector3.up, direction);
     }
 
-    public override void DieAction() {
-
-    }
 }

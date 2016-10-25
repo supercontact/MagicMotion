@@ -64,21 +64,13 @@ public class BasicAI : Unit {
                     }
                 }
             }
-        } else {
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
         base.Update();
     }
 
-    public override void PreAttackAction(Unit target) {
-
-    }
 
     public override void AttackAction(Unit target) {
         target.ReceiveDamage(attackDamage, this);
     }
 
-    public override void DieAction() {
-
-    }
 }

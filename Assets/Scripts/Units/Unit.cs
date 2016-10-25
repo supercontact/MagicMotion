@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour {
     public SpecialAttack currentSpecialAttack;
 
     public CharacterController controller;
+    public Animator animator;
 
     private Quaternion targetRotation;
     private float attackTimer = 0;
@@ -145,6 +146,12 @@ public class Unit : MonoBehaviour {
 
     public virtual void PreAttackAction(Unit target) {
         // To be overridden
+        if (animator != null) {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                animator.SetTrigger("Attack");
+                animator.SetFloat("AttackSpeed", (animator.GetFloat("AttackDuration") + 0.1f) / attackPeriod);
+            }
+        }
     }
     public virtual void AttackAction(Unit target) {
         // To be overridden
@@ -155,6 +162,13 @@ public class Unit : MonoBehaviour {
     }
     public virtual float InterruptAction(float duration) {
         // To be overridden, return actual duration stunned.
+        if (animator != null) {
+            float animationDuration = Mathf.Min(duration, interruptDuration);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                animator.SetTrigger("Stun");
+                animator.SetFloat("StunSpeed", (animator.GetFloat("StunDuration") + 0.1f) / animationDuration);
+            }
+        }
         return duration;
     }
     public virtual Vector3 SendFlyingAction(Vector3 acc) {
@@ -167,6 +181,9 @@ public class Unit : MonoBehaviour {
     }
     public virtual void DieAction() {
         // To be overridden
+        if (animator != null) {
+            animator.SetTrigger("Die");
+        }
     }
 
 
@@ -293,24 +310,24 @@ public class Unit : MonoBehaviour {
 
 
 
-    public static List<Unit> UnitsInRange(Vector3 position, float range) {
+    public static List<Unit> UnitsInRange(Vector3 position, float range, bool aliveOnly = true) {
         Collider[] colliders = Physics.OverlapSphere(position, range);
         List<Unit> units = new List<Unit>();
         foreach (Collider c in colliders) {
             Unit unit = c.GetComponent<Unit>();
-            if (unit != null && Vector3.Distance(unit.transform.position, position) <= range) {
+            if (unit != null && (!unit.isDead || !aliveOnly) && Vector3.Distance(unit.transform.position, position) <= range) {
                 units.Add(unit);
             }
         }
         return units;
     }
-    public static List<Unit> EnemiesInRange(Vector3 position, float range, int team) {
-        List<Unit> units = UnitsInRange(position, range);
+    public static List<Unit> EnemiesInRange(Vector3 position, float range, int team, bool aliveOnly = true) {
+        List<Unit> units = UnitsInRange(position, range, aliveOnly);
         List<Unit> enemies = units.FindAll(unit => unit.team != team);
         return enemies;
     }
-    public static List<Unit> FriendsInRange(Vector3 position, float range, int team) {
-        List<Unit> units = UnitsInRange(position, range);
+    public static List<Unit> FriendsInRange(Vector3 position, float range, int team, bool aliveOnly = true) {
+        List<Unit> units = UnitsInRange(position, range, aliveOnly);
         List<Unit> friends = units.FindAll(unit => unit.team == team);
         return friends;
     }
