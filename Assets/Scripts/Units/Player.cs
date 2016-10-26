@@ -83,6 +83,7 @@ public class Player : Unit {
     }
 
     public override void DieAction() {
+        anim.SetTrigger("Die");
         Links.links.gameOver.SetActive(true);
     }
 

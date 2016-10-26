@@ -38,7 +38,7 @@ public class HomingProjectile : Projectile  {
 		
 		direction = target.transform.position - transform.position + Vector3.up * target.centerHeight + initialDirection * timer;
 		body.velocity = speed * direction.normalized;
-
+        transform.rotation = Quaternion.LookRotation(direction);
 	}
 
 }

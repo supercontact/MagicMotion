@@ -1,0 +1,516 @@
+fileFormatVersion: 2
+guid: f37da171829e27f43a90fcd56408500f
+timeCreated: 1477432636
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone-Head
+    100002: Bone-Hip
+    100004: Bone-L-Foot
+    100006: Bone-L-Hand
+    100008: Bone-L-LowerArm
+    100010: Bone-L-LowerLeg
+    100012: Bone-L-UpperArm
+    100014: Bone-L-UpperLeg
+    100016: Bone-R-Foot
+    100018: Bone-R-Hand
+    100020: Bone-R-LowerArm
+    100022: Bone-R-LowerLeg
+    100024: Bone-R-UpperArm
+    100026: Bone-R-UpperLeg
+    100028: Bone-Spine
+    100030: Box001
+    100032: Box002
+    100034: Cone001
+    100036: Cone002
+    100038: Cylinder001
+    100040: Cylinder002
+    100042: IK Chain001
+    100044: IK Chain002
+    100046: IK Chain003
+    100048: IK Chain004
+    100050: Sphere001
+    100052: Sphere002
+    100054: Sphere003
+    100056: //RootNode
+    400000: Bone-Head
+    400002: Bone-Hip
+    400004: Bone-L-Foot
+    400006: Bone-L-Hand
+    400008: Bone-L-LowerArm
+    400010: Bone-L-LowerLeg
+    400012: Bone-L-UpperArm
+    400014: Bone-L-UpperLeg
+    400016: Bone-R-Foot
+    400018: Bone-R-Hand
+    400020: Bone-R-LowerArm
+    400022: Bone-R-LowerLeg
+    400024: Bone-R-UpperArm
+    400026: Bone-R-UpperLeg
+    400028: Bone-Spine
+    400030: Box001
+    400032: Box002
+    400034: Cone001
+    400036: Cone002
+    400038: Cylinder001
+    400040: Cylinder002
+    400042: IK Chain001
+    400044: IK Chain002
+    400046: IK Chain003
+    400048: IK Chain004
+    400050: Sphere001
+    400052: Sphere002
+    400054: Sphere003
+    400056: //RootNode
+    2300000: Box001
+    2300002: Box002
+    2300004: Cone001
+    2300006: Cone002
+    2300008: Cylinder002
+    2300010: Sphere001
+    2300012: Sphere002
+    2300014: Sphere003
+    3300000: Box001
+    3300002: Box002
+    3300004: Cone001
+    3300006: Cone002
+    3300008: Cylinder002
+    3300010: Sphere001
+    3300012: Sphere002
+    3300014: Sphere003
+    4300000: Cylinder001
+    4300002: Sphere001
+    4300004: Cone001
+    4300006: Sphere002
+    4300008: Sphere003
+    4300010: Cylinder002
+    4300012: Cone002
+    4300014: Box001
+    4300016: Box002
+    7400000: Die
+    9500000: //RootNode
+    13700000: Cylinder001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Die
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Bone-Hip
+        weight: 1
+      - path: Bone-Hip/Bone-L-UpperLeg
+        weight: 1
+      - path: Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg
+        weight: 1
+      - path: Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot
+        weight: 1
+      - path: Bone-Hip/Bone-L-UpperLeg/Bone-L-LowerLeg/Bone-L-Foot/Box001
+        weight: 1
+      - path: Bone-Hip/Bone-R-UpperLeg
+        weight: 1
+      - path: Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg
+        weight: 1
+      - path: Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot
+        weight: 1
+      - path: Bone-Hip/Bone-R-UpperLeg/Bone-R-LowerLeg/Bone-R-Foot/Box002
+        weight: 1
+      - path: Bone-Hip/Bone-Spine
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-Head
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-Head/Sphere001
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-Head/Sphere001/Cone001
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-L-UpperArm
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-L-UpperArm/Bone-L-LowerArm/Bone-L-Hand/Sphere002
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-R-UpperArm
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand/Sphere003
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand/Sphere003/Cylinder002
+        weight: 1
+      - path: Bone-Hip/Bone-Spine/Bone-R-UpperArm/Bone-R-LowerArm/Bone-R-Hand/Sphere003/Cylinder002/Cone002
+        weight: 1
+      - path: Cylinder001
+        weight: 1
+      - path: IK Chain001
+        weight: 1
+      - path: IK Chain002
+        weight: 1
+      - path: IK Chain003
+        weight: 1
+      - path: IK Chain004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: Bone-Hip
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-L-UpperLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-R-UpperLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Sphere001
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Cone001
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-L-UpperArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-R-UpperArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-L-LowerArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-R-LowerArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-L-Hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-R-Hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-R-LowerLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-R-Foot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-L-LowerLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bone-L-Foot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: WizardAnimDie(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone-Hip
+      position: {x: -0, y: 8.461353, z: -0.00000023841858}
+      rotation: {x: 0.00043020313, y: -0.00043020313, z: -0.70710665, w: 0.70710665}
+      scale: {x: 0.9999998, y: 1.0000001, z: 0.99999994}
+      transformModified: 1
+    - name: Bone-L-UpperLeg
+      position: {x: 0.009539604, y: -3.8175864, z: 0.004644527}
+      rotation: {x: -0.010879183, y: -0.70659256, z: 0.707537, w: -0.0000040716536}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1}
+      transformModified: 1
+    - name: Bone-L-LowerLeg
+      position: {x: -3.4390411, y: 0.00000025331974, z: -0.00000023841858}
+      rotation: {x: -2.7812478e-11, y: -0.0000000013967258, z: -0.014701177, w: 0.99989194}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone-L-Foot
+      position: {x: -3.77358, y: 0.000042907894, z: 0.00000023841858}
+      rotation: {x: 0.5026421, y: 0.48245338, z: 0.49717358, w: 0.51711524}
+      scale: {x: 0.9999999, y: 1, z: 1}
+      transformModified: 1
+    - name: Box001
+      position: {x: -2.8938446, y: 0.08642101, z: -1.0846936}
+      rotation: {x: -0.014260009, y: 0.024025993, z: -0.7066986, w: 0.7069629}
+      scale: {x: 0.9999998, y: 1.0000001, z: 1}
+      transformModified: 1
+    - name: Bone-R-UpperLeg
+      position: {x: 0.009540558, y: 3.8179977, z: -0.0046453434}
+      rotation: {x: -0.006802808, y: 0.7075043, z: 0.7066741, w: -0.0018001769}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1}
+      transformModified: 1
+    - name: Bone-R-LowerLeg
+      position: {x: -3.4390426, y: 0.00000047683716, z: 0}
+      rotation: {x: -0.0000007152393, y: -0.000000004841179, z: 0.006768459, w: 0.9999771}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone-R-Foot
+      position: {x: -3.773581, y: -0.000041961204, z: -0.00000023841858}
+      rotation: {x: -0.5079379, y: 0.4802487, z: -0.49167603, w: 0.5192447}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
+      transformModified: 1
+    - name: Box002
+      position: {x: -2.9019089, y: -0.105526686, z: -1.0618664}
+      rotation: {x: -0.025557233, y: 0.018077109, z: -0.7068758, w: 0.70664465}
+      scale: {x: 0.9999999, y: 0.9999998, z: 0.9999998}
+      transformModified: 1
+    - name: Bone-Spine
+      position: {x: -5.353389, y: -0.00000032650667, z: -1.4551915e-11}
+      rotation: {x: 0.0006077087, y: 0.0000041980925, z: -0.00054599816, w: 0.9999997}
+      scale: {x: 1.0000004, y: 1.0000002, z: 0.9999999}
+      transformModified: 1
+    - name: Bone-Head
+      position: {x: -15.2621155, y: -0.00000029988587, z: 0.0000015008045}
+      rotation: {x: -0.000000012925229, y: 0.000022172922, z: 0.0005889575, w: 0.9999998}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+      transformModified: 1
+    - name: Sphere001
+      position: {x: -7.822191, y: -0.015991813, z: -0.0004791331}
+      rotation: {x: 0.5006408, y: 0.49938163, z: -0.50057465, w: -0.49940145}
+      scale: {x: 0.99999976, y: 1.0000001, z: 0.9999998}
+      transformModified: 1
+    - name: Cone001
+      position: {x: 0.0099588735, y: -0.00020268184, z: 0.63238907}
+      rotation: {x: 1.6481182e-10, y: 1.6445917e-10, z: 0.7071068, w: 0.7071067}
+      scale: {x: 0.9117848, y: 0.9117848, z: 0.9117848}
+      transformModified: 1
+    - name: Bone-L-UpperArm
+      position: {x: -14.205349, y: -5.51562, z: 0.013292253}
+      rotation: {x: 0.4984587, y: 0.50153613, z: 0.5004398, w: 0.49956027}
+      scale: {x: 0.9999998, y: 1, z: 1.0000004}
+      transformModified: 1
+    - name: Bone-L-LowerArm
+      position: {x: -5.7156725, y: -1.1641532e-10, z: -0.0000019073486}
+      rotation: {x: -0.00000047682386, y: 0.000000055992746, z: -0.00023781581, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+      transformModified: 1
+    - name: Bone-L-Hand
+      position: {x: -5.6066923, y: 0, z: 0}
+      rotation: {x: 0.70681214, y: 0.018255733, z: 0.018263375, w: 0.70692986}
+      scale: {x: 1, y: 1, z: 1.0000001}
+      transformModified: 1
+    - name: Sphere002
+      position: {x: -2.0618134, y: 0.10516167, z: 0.042434752}
+      rotation: {x: -0.0001173335, y: 0.0050338046, z: -0.025480721, w: 0.99966264}
+      scale: {x: 0.9538571, y: 0.9538571, z: 0.9538567}
+      transformModified: 1
+    - name: Bone-R-UpperArm
+      position: {x: -14.170593, y: 5.484512, z: -0.013484041}
+      rotation: {x: 0.4898385, y: -0.50996935, z: -0.49176708, w: 0.5080892}
+      scale: {x: 0.99999994, y: 0.9999999, z: 1.0000002}
+      transformModified: 1
+    - name: Bone-R-LowerArm
+      position: {x: -5.71567, y: -0.0000018924475, z: 0}
+      rotation: {x: -0.0000004395686, y: -0.00000018012199, z: -0.034343716, w: 0.9994101}
+      scale: {x: 0.99999964, y: 1, z: 1}
+      transformModified: 1
+    - name: Bone-R-Hand
+      position: {x: -5.6067066, y: -0.000000059604645, z: 0}
+      rotation: {x: 0.7070348, y: 0.008801653, z: 0.008801847, w: 0.7070692}
+      scale: {x: 1.0000001, y: 1, z: 1}
+      transformModified: 1
+    - name: Sphere003
+      position: {x: -2.0639458, y: -0.020170212, z: 0.020093903}
+      rotation: {x: -0.004891917, y: 0.99998504, z: -0.000013341243, w: -0.0024501898}
+      scale: {x: 0.95385724, y: 0.9538574, z: 0.9538566}
+      transformModified: 1
+    - name: Cylinder002
+      position: {x: -2.07999, y: -0.026620544, z: -28.0581}
+      rotation: {x: 0.0007527822, y: 0.039648913, z: 0.03421768, w: 0.9986273}
+      scale: {x: 1.0483752, y: 1.0483751, z: 1.0483754}
+      transformModified: 1
+    - name: Cone002
+      position: {x: -0.04896736, y: -0.00032043457, z: 44.308365}
+      rotation: {x: 0.0000035764242, y: -0.00000037687198, z: 1.3478541e-12, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Cylinder001
+      position: {x: -0, y: 0, z: -0.19088745}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: IK Chain001
+      position: {x: 16.815561, y: 27.923882, z: -0.0000321182}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: IK Chain002
+      position: {x: -18.838583, y: 27.98878, z: 0.000034371635}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: IK Chain003
+      position: {x: 3.928982, y: -0.659987, z: -0.000050755418}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: IK Chain004
+      position: {x: -3.9285743, y: 1.2408242, z: -0.00005193776}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

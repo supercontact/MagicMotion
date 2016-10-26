@@ -176,6 +176,10 @@ public class LeapControl : MonoBehaviour {
         }
     }
 
+    public void SetRightHanded(bool value) {
+        rightHanded = value;
+    }
+
     public bool SetCalibrationPoint(int i) {
         if (rightHand == null) {
             Debug.Log("Right hand not found!");
@@ -210,7 +214,8 @@ public class LeapControl : MonoBehaviour {
         height = (cornerPositions[0] + cornerPositions[1] - cornerPositions[2] - cornerPositions[3]).magnitude / 2;
         axisY = Vector3.Cross(axisZ, axisX);
 
-        scaleFactor = (Screen.width / width + Screen.height / height) / 2;
+        //scaleFactor = (Screen.width / width + Screen.height / height) / 2;
+        scaleFactor = (1920 / width + 1080 / height) / 2;
         calibrated = true;
     }
 
