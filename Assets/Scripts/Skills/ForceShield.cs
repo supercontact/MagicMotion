@@ -28,7 +28,7 @@ public class ForceShield : MonoBehaviour {
             prepareProgress += Time.deltaTime / openAnimationDuration;
             prepareProgress = Mathf.Min(prepareProgress, 1);
             transform.localScale = new Vector3(1, prepareProgress, 1);
-            transform.localRotation = Quaternion.AngleAxis(LeapControl.handPoint2.x * anglePerPixel + angleOffset, Vector3.up);
+            transform.localRotation = Quaternion.AngleAxis(LeapControl.handPoint2.x * anglePerPixel + (LeapControl.rightHanded ? angleOffset : -angleOffset), Vector3.up);
         } else {
             prepareProgress -= Time.deltaTime / openAnimationDuration;
             if (prepareProgress > 0) {

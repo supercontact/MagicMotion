@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Leap;
 using Leap.Unity;
 using System.Collections;
@@ -106,6 +107,11 @@ public class LeapControl : MonoBehaviour {
         pointer.gameObject.SetActive(isPointing);
         pointer2.anchoredPosition = handPoint;
         status.text = handState.ToString();
+
+        //
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void UpdateHands() {

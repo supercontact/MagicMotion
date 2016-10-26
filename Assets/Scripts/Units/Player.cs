@@ -62,7 +62,7 @@ public class Player : Unit {
             float lerp = 1 - Mathf.Exp(-Time.deltaTime * 10);
             if (v != Vector3.zero) {
                 controller.Move(transform.TransformVector(v) * Time.deltaTime);
-                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (v.z / moveSpeed) / 2 + 0.5f, lerp));
+                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (v.magnitude / moveSpeed) / 2 + 0.5f, lerp));
             } else {
                 anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), 0.5f, lerp));
             }
