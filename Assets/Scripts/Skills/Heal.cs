@@ -21,7 +21,7 @@ public class Heal : SpecialAttack
         buff.duration = duration;
         buff.regenerateAmountPerTick = regenerateAmountPerTick;
         buff.tickPerSecond = tickPerSecond;
-        OverlayDisplay.ShowImage(Links.links.healImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.healImage, 0, 0.5f);
     }
 
 }

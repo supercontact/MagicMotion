@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IncreaseSpeedBuff : MonoBehaviour {
+public class SpeedBuff : MonoBehaviour {
 
     public Unit unit;
     public float duration = 5;

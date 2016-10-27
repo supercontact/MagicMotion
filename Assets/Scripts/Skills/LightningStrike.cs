@@ -19,7 +19,7 @@ public class LightningStrike : SpecialAttack {
     }
 
     public override void PreAttackAction() {
-        OverlayDisplay.ShowImage(Links.links.ligntningImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.ligntningImage, 0, 0.5f);
     }
 
     public override void AttackAction() {

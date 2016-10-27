@@ -3,58 +3,58 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class OverlayDisplay : MonoBehaviour {
-
-    private static List<Image> images;
+    
+    private static List<GameObject> uiElements;
     private static List<float> fadeDurations;
     private static List<float> timers;
 
 	// Use this for initialization
 	void Start () {
-        images = new List<Image>();
+        uiElements = new List<GameObject>();
         fadeDurations = new List<float>();
         timers = new List<float>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        for (int i = images.Count - 1; i >= 0; i--) {
+        for (int i = uiElements.Count - 1; i >= 0; i--) {
             if (fadeDurations[i] < 0) continue;
-            timers[i] -= Time.deltaTime;
+            timers[i] -= Time.unscaledDeltaTime;
             float newAlpha = Mathf.Min(timers[i] / fadeDurations[i], 1);
             if (newAlpha < 0) {
-                images[i].gameObject.SetActive(false);
-                images.RemoveAt(i);
+                uiElements[i].gameObject.SetActive(false);
+                uiElements.RemoveAt(i);
                 fadeDurations.RemoveAt(i);
                 timers.RemoveAt(i);
             } else {
-                images[i].color = new Color(1, 1, 1, newAlpha);
+                uiElements[i].GetComponent<CanvasRenderer>().SetAlpha(newAlpha);
             }
         }
 	}
 
     // duration = 0 means never disappear;
-    public static void ShowImage(Image image, float duration, float fadeDuration) {
-        if (!images.Contains(image)) {
-            images.Add(image);
+    public static void Show(GameObject uiComponent, float duration, float fadeDuration) {
+        if (!uiElements.Contains(uiComponent)) {
+            uiElements.Add(uiComponent);
             fadeDurations.Add(fadeDuration);
             timers.Add(duration + fadeDuration);
         }
-        image.gameObject.SetActive(true);
-        image.color = Color.white;
+        uiComponent.SetActive(true);
+        uiComponent.GetComponent<CanvasRenderer>().SetAlpha(1);
     }
 
-    public static void ShowImageIndefinately(Image image) {
-        if (!images.Contains(image)) {
-            images.Add(image);
+    public static void ShowIndefinately(GameObject uiComponent) {
+        if (!uiElements.Contains(uiComponent)) {
+            uiElements.Add(uiComponent);
             fadeDurations.Add(-1);
             timers.Add(-1);
         }
-        image.gameObject.SetActive(true);
-        image.color = Color.white;
+        uiComponent.SetActive(true);
+        uiComponent.GetComponent<CanvasRenderer>().SetAlpha(1);
     }
 
-    public static void HideImage(Image image, float fadeDuration) {
-        int index = images.IndexOf(image);
+    public static void Hide(GameObject uiComponent, float fadeDuration) {
+        int index = uiElements.IndexOf(uiComponent);
         if (index >= 0) {
             fadeDurations[index] = fadeDuration;
             timers[index] = fadeDuration;

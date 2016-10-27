@@ -24,7 +24,7 @@ public class TrajectoryDetector : MonoBehaviour {
     public GameObject sphere;
     public GameObject cylinder;
     public GameObject marker;
-    public Image image;
+    public GameObject image;
 
     private Vector3 input;
     private Vector3 prevInput;
@@ -32,6 +32,11 @@ public class TrajectoryDetector : MonoBehaviour {
     private HashSet<SimulatedPointer> pointers;
     private bool visualizing = false;
     private Dictionary<SimulatedPointer, GameObject> visualMarkers;
+
+    public static void Reset() {
+        actionList = new List<TrajectoryDetector>();
+        OnTrigger = null;
+    }
 
     void Start() {
         actionList.Add(this);
@@ -181,7 +186,7 @@ public class TrajectoryDetector : MonoBehaviour {
             OnTrigger(type);
         }
         if (image != null) {
-            OverlayDisplay.ShowImage(image, 0, 0.5f);
+            OverlayDisplay.Show(image, 0, 0.5f);
         }
     }
 

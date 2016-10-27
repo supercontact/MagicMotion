@@ -16,7 +16,14 @@ public class GrabDetector : MonoBehaviour {
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
 
+    public KeyCode simulateKey = KeyCode.Alpha1;
+
     private float currentDistance = 0;
+
+    public static void Reset() {
+        OnGrab = null;
+        OnRelease = null;
+    }
 
     // Use this for initialization
     void Start () {
@@ -25,21 +32,30 @@ public class GrabDetector : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (LeapControl.handState == LeapControl.HandState.Fist) {
-            if (currentDistance >= distanceRequired) {
+        if (!LeapControl.control.simulateWithMouse) {
+            if (LeapControl.handState == LeapControl.HandState.Fist) {
+                if (currentDistance >= distanceRequired) {
+                    grab();
+                }
+            } else {
+                if (grabbing) {
+                    release();
+                }
+            }
+
+            if (handIsRightOpen() && Vector3.Angle(LeapControl.handSpeed, Vector3.forward) <= palmVelocityAngleThreshold) {
+                currentDistance += Vector3.Dot(LeapControl.handSpeed, Vector3.forward) * Time.deltaTime;
+            } else {
+                currentDistance -= distanceDropRate * Time.deltaTime;
+                currentDistance = Mathf.Max(currentDistance, 0);
+            }
+        } else {
+            if (Input.GetKeyDown(simulateKey)) {
                 grab();
             }
-        } else {
-            if (grabbing) {
+            if (Input.GetKeyUp(simulateKey)) {
                 release();
             }
-        }
-
-	    if (handIsRightOpen() && Vector3.Angle(LeapControl.handSpeed, Vector3.forward) <= palmVelocityAngleThreshold) {
-            currentDistance += Vector3.Dot(LeapControl.handSpeed, Vector3.forward) * Time.deltaTime;
-        } else {
-            currentDistance -= distanceDropRate * Time.deltaTime;
-            currentDistance = Mathf.Max(currentDistance, 0);
         }
     }
 
@@ -56,7 +72,7 @@ public class GrabDetector : MonoBehaviour {
             OnGrab();
         }
         currentDistance = 0;
-        OverlayDisplay.ShowImageIndefinately(Links.links.handImage);
+        OverlayDisplay.ShowIndefinately(Links.links.handImage);
     }
 
     private void release() {
@@ -65,6 +81,6 @@ public class GrabDetector : MonoBehaviour {
             OnRelease();
         }
         currentDistance = 0;
-        OverlayDisplay.HideImage(Links.links.handImage, 0.5f);
+        OverlayDisplay.Hide(Links.links.handImage, 0.5f);
     }
 }

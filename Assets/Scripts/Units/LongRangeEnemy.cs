@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LongDistanceAI : WanderingBasicAI {
+public class LongRangeEnemy : WanderingBasicAI {
 	
 	public float bulletRange = 15f;
 	public float bulletSpeed = 8f;
@@ -13,8 +13,8 @@ public class LongDistanceAI : WanderingBasicAI {
 	}
 
 	public override void AttackAction(Unit target) {
-		ParabolicProjectile bullet = GameObject.Instantiate(Links.links.StoneProjectile).GetComponent<ParabolicProjectile>();
-		bullet.attacker = this;
+		ParabolicProjectile bullet = GameObject.Instantiate(Links.links.stoneProjectile).GetComponent<ParabolicProjectile>();
+		bullet.Attacker = this;
 		bullet.team = team;
 		bullet.damage = attackDamage;
 		bullet.lifeTime = bulletRange / bulletSpeed;

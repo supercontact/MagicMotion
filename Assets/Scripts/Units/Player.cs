@@ -23,7 +23,7 @@ public class Player : Unit {
     private LightningStrike skillLightning;
     private SummonHelper skillSummonHelper;
     private Heal skillHeal;
-    private IncreaseSpeed skillIncreaseSpeed;
+    private SpeedUp skillIncreaseSpeed;
 
     // Use this for initialization
     public override void Start () {
@@ -42,7 +42,7 @@ public class Player : Unit {
         skillLightning = new LightningStrike();
         skillSummonHelper = new SummonHelper();
         skillHeal = new Heal();
-        skillIncreaseSpeed = new IncreaseSpeed();
+        skillIncreaseSpeed = new SpeedUp();
     }
 
     // Update is called once per frame
@@ -62,21 +62,23 @@ public class Player : Unit {
             float lerp = 1 - Mathf.Exp(-Time.deltaTime * 10);
             if (v != Vector3.zero) {
                 controller.Move(transform.TransformVector(v) * Time.deltaTime);
-                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), (v.magnitude / moveSpeed) / 2 + 0.5f, lerp));
+                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), v.magnitude / 6f, lerp));
             } else {
-                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), 0.5f, lerp));
+                anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), 0, lerp));
             }
 
+            float r = 0;
             if (LeapControl.isTracked) {
                 Vector3 handPosition = LeapControl.GetTargetingPositionOnScreen();
+                
                 if (handPosition.x < rotateAreaWidth) {
-                    float r = 1 - handPosition.x / rotateAreaWidth;
-                    transform.rotation = Quaternion.AngleAxis(-r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
+                    r = - (1 - handPosition.x / rotateAreaWidth);
                 } else if (handPosition.x > Screen.width - rotateAreaWidth) {
-                    float r = 1 - (Screen.width - handPosition.x) / rotateAreaWidth;
-                    transform.rotation = Quaternion.AngleAxis(r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
+                    r = 1 - (Screen.width - handPosition.x) / rotateAreaWidth;
                 }
             }
+            r += Input.GetAxis("Rotational");
+            transform.rotation = Quaternion.AngleAxis(r * maxRotationSpeed * Time.deltaTime, Vector3.up) * transform.rotation;
         }
 
         base.Update();
@@ -84,7 +86,6 @@ public class Player : Unit {
 
     public override void DieAction() {
         anim.SetTrigger("Die");
-        Links.links.gameOver.SetActive(true);
     }
 
     private void TrajectoryGestureTriggered(string type) {

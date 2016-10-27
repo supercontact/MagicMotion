@@ -20,7 +20,7 @@ public class SummonHelper : SpecialAttack {
         GameObject ring = GameObject.Instantiate(Links.links.magicRing);
         summonPosition = attacker.transform.TransformPoint(position);
         ring.transform.position = summonPosition;
-        OverlayDisplay.ShowImage(Links.links.starImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.starImage, 0, 0.5f);
     }
 
     public override void AttackAction() {

@@ -35,8 +35,9 @@ public class LightBeam : SpecialAttack {
         startTime = Time.time;
         aimLine = GameObject.Instantiate(Links.links.aimLine);
         aimLine.transform.position = attacker.transform.position + 0.5f * Vector3.up;
+        aimLine.transform.rotation = attacker.transform.rotation;
         aimLine.transform.localScale = new Vector3(1, 1, range);
-        OverlayDisplay.ShowImage(Links.links.crossImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.crossImage, 0, 0.5f);
     }
 
     public override void AttackAction() {

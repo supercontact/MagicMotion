@@ -31,7 +31,7 @@ public class EarthSpikes : SpecialAttack {
         startTime = Time.time;
         marker = GameObject.Instantiate(Links.links.aimMarker).GetComponent<AimMarker>();
         marker.transform.position = attacker.transform.TransformPoint(relativeTargetPosition);
-        OverlayDisplay.ShowImage(Links.links.spikeImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.spikeImage, 0, 0.5f);
     }
     public override void AttackAction() {
         Vector3 position = attacker.transform.TransformPoint(relativeTargetPosition);

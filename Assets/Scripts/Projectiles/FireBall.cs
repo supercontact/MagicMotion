@@ -10,10 +10,4 @@ public class FireBall : SimpleProjectile {
         return true;
     }
 
-    public override void EndAction(bool targetHit) {
-        GameObject explosion = Instantiate(Links.links.explosion);
-        explosion.transform.position = this.transform.position;
-        Destroy(gameObject);
-    }
-
 }

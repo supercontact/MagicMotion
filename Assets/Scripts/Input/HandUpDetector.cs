@@ -13,7 +13,13 @@ public class HandUpDetector : MonoBehaviour {
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
 
+    public KeyCode simulateKey = KeyCode.Alpha2;
+
     private float currentDistance = 0;
+
+    public static void Reset() {
+        OnTrigger = null;
+    }
 
     // Use this for initialization
     void Start () {
@@ -22,13 +28,17 @@ public class HandUpDetector : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (handIsUp() && Vector3.Angle(LeapControl.handSpeed, Vector3.up) <= palmVelocityAngleThreshold) {
-            currentDistance += Vector3.Dot(LeapControl.handSpeed, Vector3.up) * Time.deltaTime;
-            if (currentDistance >= distanceRequired) {
-                finish();
+        if (!LeapControl.control.simulateWithMouse) {
+            if (handIsUp() && Vector3.Angle(LeapControl.handSpeed, Vector3.up) <= palmVelocityAngleThreshold) {
+                currentDistance += Vector3.Dot(LeapControl.handSpeed, Vector3.up) * Time.deltaTime;
+                if (currentDistance >= distanceRequired) {
+                    finish();
+                }
+            } else {
+                currentDistance = 0;
             }
-        } else {
-            currentDistance = 0;
+        } else if (Input.GetKeyDown(simulateKey)) {
+            finish();
         }
     }
 

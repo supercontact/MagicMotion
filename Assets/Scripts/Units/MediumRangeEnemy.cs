@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MediateDistanceAI : WanderingBasicAI {
+public class MediumRangeEnemy : WanderingBasicAI {
 
 	public float bulletRange = 15f;
 	public float bulletSpeed = 8f;
@@ -13,8 +13,8 @@ public class MediateDistanceAI : WanderingBasicAI {
 	}
 
 	public override void AttackAction(Unit target) {
-        SimpleProjectile bullet = Instantiate(Links.links.SmallBullet).GetComponent<SimpleProjectile>();
-		bullet.attacker = this;
+        SimpleProjectile bullet = Instantiate(Links.links.smallBullet).GetComponent<SimpleProjectile>();
+		bullet.Attacker = this;
 		bullet.team = team;
 		bullet.damage = attackDamage;
 		bullet.lifeTime = bulletRange / bulletSpeed;

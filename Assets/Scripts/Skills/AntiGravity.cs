@@ -26,7 +26,7 @@ public class AntiGravity : SpecialAttack {
                 enemie.SendFlying(impulse);
             }
         }
-        OverlayDisplay.ShowImage(Links.links.flashImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.flashImage, 0, 0.5f);
         GameObject shockRing = GameObject.Instantiate(Links.links.shockRing);
         shockRing.transform.position = attacker.transform.position;
     }

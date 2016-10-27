@@ -33,7 +33,7 @@ public class Grabbing : SpecialAttack {
     public override void AttackAction() {
         projectile = GameObject.Instantiate(Links.links.grabbingProjectile).GetComponent<GrabbingProjectile>();
         projectile.relatedAttack = this;
-        projectile.attacker = attacker;
+        projectile.Attacker = attacker;
         projectile.lifeTime = projectileRange / projectileSpeed;
         projectile.speed = projectileSpeed;
         projectile.Launch(attacker.transform.position + 0.5f * attacker.transform.forward + attacker.centerHeight * Vector3.up, attacker.transform.forward);

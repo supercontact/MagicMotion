@@ -19,13 +19,13 @@ public class FireBallSpell : SpecialAttack {
     }
 
     public override void PreAttackAction() {
-        OverlayDisplay.ShowImage(Links.links.circleImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.circleImage, 0, 0.5f);
     }
 
     public override void AttackAction() {
         for (int i = -number + 1; i <= number - 1; i += 2) {
             FireBall fireBall = GameObject.Instantiate(Links.links.fireBall).GetComponent<FireBall>();
-            fireBall.attacker = attacker;
+            fireBall.Attacker = attacker;
             fireBall.damage = damage;
             fireBall.lifeTime = range / speed;
             fireBall.speed = speed;

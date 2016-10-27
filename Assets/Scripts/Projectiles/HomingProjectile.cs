@@ -2,43 +2,36 @@
 using System.Collections;
 
 public class HomingProjectile : Projectile  {
-	private Vector3 direction;
 
 	public Unit target;
 	public float speed = 2;
-	public float timer = 2f;
-	public Vector3 initialDirection;
+    public float angleSpeed = 90;
 
-	public override void Awake() {
+    private Vector3 direction;
+
+    public override void Awake() {
 		base.Awake();
 		body.useGravity = false;
 		body.drag = 0;
 		body.angularDrag = 0;
 	}
-		
-	// Use this for initialization
-	public override void Start () {
-		base.Start ();
-		timer = 2f;
-	}
-	
-	// Update is called once per frame
-	public override void Update () {
-		base.Update ();
-		if (timer >  Time.deltaTime) {
-			timer -= Time.deltaTime;
-		} else {
-			timer = 0;
-		}
-//		Debug.Log ("direction"+initialDirection*timer+"time"+timer);
-		FixedUpdate ();
-	}
 
 	public virtual void FixedUpdate() {
-		
-		direction = target.transform.position - transform.position + Vector3.up * target.centerHeight + initialDirection * timer;
+        Vector3 realDir = (target.transform.position + Vector3.up * target.centerHeight - transform.position).normalized;
+        float angle = Vector3.Angle(direction, realDir);
+        if (angle < angleSpeed * Time.deltaTime) {
+            direction = realDir;
+        } else {
+            direction = Vector3.Slerp(direction, realDir, angleSpeed * Time.deltaTime / angle);
+        }
 		body.velocity = speed * direction.normalized;
         transform.rotation = Quaternion.LookRotation(direction);
 	}
+
+    public virtual void Launch(Unit target, Vector3 initialPosition, Vector3 initialDirection) {
+        this.target = target;
+        transform.position = initialPosition;
+        direction = initialDirection.normalized;
+    }
 
 }

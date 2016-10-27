@@ -103,7 +103,7 @@ public class Helper : Unit {
 
     public override void AttackAction(Unit target) {
         SimpleProjectile bullet = GameObject.Instantiate(Links.links.crystalBullet).GetComponent<SimpleProjectile>();
-        bullet.attacker = this;
+        bullet.Attacker = this;
         bullet.team = team;
         bullet.damage = attackDamage;
         bullet.lifeTime = bulletRange / bulletSpeed;

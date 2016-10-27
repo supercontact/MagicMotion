@@ -12,6 +12,8 @@ public class LeapControl : MonoBehaviour {
     public LeapServiceProvider provider;
     public RectTransform pointer, pointer2;
     public Text status;
+    public bool simulateWithMouse = false;
+    public KeyCode subHandSimulateKey = KeyCode.Alpha3;
 
     public enum HandState
     {
@@ -65,6 +67,9 @@ public class LeapControl : MonoBehaviour {
     private int calibrationIndex = -1;
     private bool calibrated = false;
 
+    private Vector3 lastMousePosition;
+    private Vector3 lastMouseSmoothedSpeed;
+
 
 	// Use this for initialization
 	void Start () {
@@ -80,38 +85,65 @@ public class LeapControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        isTracked = false;
-        isTracked2 = false;
-        isPointing = false;
-        isPointing2 = false;
+        if (!simulateWithMouse) {
+            isTracked = false;
+            isTracked2 = false;
+            isPointing = false;
+            isPointing2 = false;
 
-        UpdateHands();
+            UpdateHands();
 
-        if (calibrationIndex >= 0) {
-            // Calibrating
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                if (SetCalibrationPoint(calibrationIndex)) {
-                    calibrationIndex++;
+            if (calibrationIndex >= 0) {
+                // Calibrating
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    if (SetCalibrationPoint(calibrationIndex)) {
+                        Links.links.calibrationInstructions[calibrationIndex].SetActive(false);
+                        calibrationIndex++;
+                    }
                 }
+                if (calibrationIndex >= 4) {
+                    UpdateTrackedSpace();
+                    calibrationIndex = -1;
+                    SceneControl.Play();
+                } else {
+                    Links.links.calibrationInstructions[calibrationIndex].SetActive(true);
+                }
+            } else if (calibrated) {
+                UpdateInfo(mainHand, ref fingerPoint, ref fingerVector, ref handPoint, ref handSpeed, ref smoothedHandSpeed, ref palmDirection, ref handState, ref isTracked, ref isPointing, ref nextState, ref stateChangeProgress);
+                UpdateInfo(subHand, ref fingerPoint2, ref fingerVector2, ref handPoint2, ref handSpeed2, ref smoothedHandSpeed2, ref palmDirection2, ref handState2, ref isTracked2, ref isPointing2, ref nextState2, ref stateChangeProgress2);
             }
-            if (calibrationIndex >= 4) {
-                UpdateTrackedSpace();
-                calibrationIndex = -1;
-            }
-        } else if (calibrated) {
-            UpdateInfo(mainHand, ref fingerPoint, ref fingerVector, ref handPoint, ref handSpeed, ref smoothedHandSpeed, ref palmDirection, ref handState, ref isTracked, ref isPointing, ref nextState, ref stateChangeProgress);
-            UpdateInfo(subHand, ref fingerPoint2, ref fingerVector2, ref handPoint2, ref handSpeed2, ref smoothedHandSpeed2, ref palmDirection2, ref handState2, ref isTracked2, ref isPointing2, ref nextState2, ref stateChangeProgress2);
+        } else {
+            // Simulating hands with mouse
+            isTracked = true;
+            isTracked2 = Input.GetKey(subHandSimulateKey);
+
+            Vector3 mousePos = new Vector3(Input.mousePosition.x - Screen.width / 2, Input.mousePosition.y - Screen.height / 2, 0);
+
+            isPointing = true;
+            isPointing2 = true;
+            handState = HandState.Pointing;
+            handState2 = HandState.Palm;
+            fingerPoint = mousePos;
+            fingerPoint2 = fingerPoint;
+            fingerVector = Vector3.forward;
+            fingerVector2 = fingerVector;
+            handPoint = fingerPoint;
+            handPoint2 = handPoint;
+            handSpeed = (mousePos - lastMousePosition) / Time.deltaTime;
+            handSpeed2 = handSpeed;
+            smoothedHandSpeed = lastMouseSmoothedSpeed * 0.8f + handSpeed * 0.2f;
+            smoothedHandSpeed2 = smoothedHandSpeed;
+            palmDirection = Vector3.down;
+            palmDirection2 = palmDirection;
+
+            lastMousePosition = mousePos;
+            lastMouseSmoothedSpeed = smoothedHandSpeed;
         }
 
         pointer.anchoredPosition = fingerPoint;
         pointer.gameObject.SetActive(isPointing);
         pointer2.anchoredPosition = handPoint;
         status.text = handState.ToString();
-
-        //
-        if (Input.GetKeyDown(KeyCode.R)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 
     public void UpdateHands() {
@@ -186,6 +218,10 @@ public class LeapControl : MonoBehaviour {
         rightHanded = value;
     }
 
+    public void SetMouseSimulation(bool value) {
+        simulateWithMouse = value;
+    }
+
     public bool SetCalibrationPoint(int i) {
         if (rightHand == null) {
             Debug.Log("Right hand not found!");
@@ -199,6 +235,7 @@ public class LeapControl : MonoBehaviour {
                 return true;
             }
         }
+        OverlayDisplay.Show(Links.links.calibrationWarning, 2, 1);
         return false;
     }
 
@@ -229,6 +266,11 @@ public class LeapControl : MonoBehaviour {
         cornerPositions = new Vector3[4];
         calibrationIndex = 0;
         calibrated = false;
+        Links.links.calibrationInstructions[0].SetActive(true);
+        Links.links.calibrationInstructions[1].SetActive(false);
+        Links.links.calibrationInstructions[2].SetActive(false);
+        Links.links.calibrationInstructions[3].SetActive(false);
+        SceneControl.EnterSlowMotion();
     }
 
     public Vector3 TransformPoint(Vector3 p) {

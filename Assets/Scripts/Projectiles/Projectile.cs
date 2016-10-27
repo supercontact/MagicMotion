@@ -3,12 +3,14 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-    public Unit attacker;
+    private Unit attacker;
     public int team = 0;
     public int damage = 1;
     public bool nonInterruptive = false;
     public bool multiHit = false;
     public float lifeTime = 1;
+
+    public GameObject explosionPrefab;
 
     public Rigidbody body;
     public Collider[] colliders;
@@ -16,6 +18,18 @@ public class Projectile : MonoBehaviour {
     protected float lifeTimer = 0;
     protected bool targetHit = false;
     protected bool ended = false;
+
+    public Unit Attacker {
+        get {return attacker;}
+        set {
+            attacker = value;
+            if (attacker != null) {
+                foreach (Collider c in colliders) {
+                    Physics.IgnoreCollision(c, attacker.controller);
+                }
+            }
+        }
+    }
 
     public virtual void Awake() {
         body = GetComponent<Rigidbody>();
@@ -26,11 +40,7 @@ public class Projectile : MonoBehaviour {
     }
 
     public virtual void Start() {
-        if (attacker != null) {
-            foreach (Collider c in colliders) {
-                Physics.IgnoreCollision(c, attacker.controller);
-            }
-        }
+
     }
 
     public virtual void Update() {
@@ -64,7 +74,7 @@ public class Projectile : MonoBehaviour {
     private void Hit(Unit unit) {
         targetHit = true;
         if (unit != null && damage > 0) {
-            unit.ReceiveDamage(damage, attacker, nonInterruptive);
+            unit.ReceiveDamage(damage, Attacker, nonInterruptive);
         }
         if (!multiHit) {
             ended = true;
@@ -78,6 +88,16 @@ public class Projectile : MonoBehaviour {
     }
     public virtual void EndAction(bool targetHit) {
         // To be overridden, called when running out of time and not hitting anything. Return true to destroy immediately.
+        if (explosionPrefab != null) {
+            GameObject explosion = Instantiate(explosionPrefab);
+            explosion.transform.position = transform.position;
+        }
+        ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
+        for (int i = 0; i < particles.Length; i++) {
+            particles[i].transform.SetParent(null);
+            particles[i].Stop();
+            Destroy(particles[i].gameObject, 5f);
+        }
         Destroy(gameObject);
     }
 

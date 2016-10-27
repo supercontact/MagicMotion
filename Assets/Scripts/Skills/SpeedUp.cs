@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IncreaseSpeed : SpecialAttack
+public class SpeedUp : SpecialAttack
 {
     public float duration = 5;
     public float speedBoost = 3;
 
-    public IncreaseSpeed() {
+    public SpeedUp() {
         attackPeriod = 0.5f;
         attackDelay = 0f;
     }
@@ -15,11 +15,11 @@ public class IncreaseSpeed : SpecialAttack
         return true;
     }
     public override void AttackAction() {
-        IncreaseSpeedBuff buff = new GameObject().AddComponent<IncreaseSpeedBuff>();
+        SpeedBuff buff = new GameObject().AddComponent<SpeedBuff>();
         buff.unit = target;
         buff.duration = duration;
         buff.speedBoost = speedBoost;
-        OverlayDisplay.ShowImage(Links.links.infinityImage, 0, 0.5f);
+        OverlayDisplay.Show(Links.links.infinityImage, 0, 0.5f);
     }
 
 }

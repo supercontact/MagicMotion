@@ -88,8 +88,10 @@ public class Unit : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
 
             // Attacking
-            if (state == State.Attacking) {
+            if (attackTimer > 0) {
                 attackTimer -= Time.deltaTime;
+            }
+            if (state == State.Attacking) { 
                 float attackMoment = attackPeriod - attackDelay;
                 if (attackTimer <= attackMoment && !attacked) {
                     AttackAction(attackTarget);
@@ -101,8 +103,10 @@ public class Unit : MonoBehaviour {
             }
 
             // Casting
-            if (state == State.Casting) {
+            if (castTimer > 0) {
                 castTimer -= Time.deltaTime;
+            }
+            if (state == State.Casting) {
                 float castMoment = currentSpecialAttack.lasting ? 0 : currentSpecialAttack.attackPeriod - currentSpecialAttack.attackDelay;
                 if (castTimer <= castMoment && !cast) {
                     currentSpecialAttack.AttackAction();
@@ -201,9 +205,15 @@ public class Unit : MonoBehaviour {
     }
 
     public void ForceStop() {
+        if (state == State.Attacking && !attacked) {
+            attackTimer = 0;
+        }
         if (state == State.Casting) {
             state = State.Idle;
             currentSpecialAttack.Interrupt();
+            if (!cast) {
+                castTimer = 0;
+            }
         }
         state = State.Idle;
     }
@@ -230,7 +240,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void Attack(Unit target) {
-        if (!isBusy()) {
+        if (!isBusy() && attackTimer <= 0) {
             state = State.Attacking;
             PreAttackAction(target);
             attackTimer = attackPeriod;
@@ -243,7 +253,7 @@ public class Unit : MonoBehaviour {
     public void Cast(Unit target, SpecialAttack specialAttack) {
         specialAttack.target = target;
         specialAttack.attacker = this;
-        if (!isBusy() && specialAttack.IsUsableNow()) {
+        if (!isBusy() && castTimer <= 0 && specialAttack.IsUsableNow()) {
             state = State.Casting;
             currentSpecialAttack = specialAttack;
             specialAttack.PreAttackAction();
