@@ -18,8 +18,7 @@ public class TrajectoryDetector : MonoBehaviour {
     public float pathOvershootFactor = 0.25f;
 
     public bool initVisualization = false;
-    public Vector3 visualizationCenter = new Vector3(0, 0, 50);
-    public float visualizationScaler = 0.01f;
+    public GameObject visualizationContainer;
 
     public GameObject sphere;
     public GameObject cylinder;
@@ -88,9 +87,11 @@ public class TrajectoryDetector : MonoBehaviour {
                     }
                 } else {
                     if (!visualMarkers.ContainsKey(pointer)) {
-                        visualMarkers.Add(pointer, Instantiate(marker));
+                        GameObject newMarker = Instantiate(marker);
+                        newMarker.transform.SetParent(visualizationContainer.transform, false);
+                        visualMarkers.Add(pointer, newMarker);
                     }
-                    visualMarkers[pointer].transform.position = VisualizationTransform(pointer.position);
+                    visualMarkers[pointer].transform.localPosition = pointer.position;
                 }
             }
         }
@@ -206,20 +207,18 @@ public class TrajectoryDetector : MonoBehaviour {
         visualizing = true;
         for (int i = 0; i < path.Length; i++) {
             GameObject newSphere = Instantiate(sphere);
-            newSphere.transform.position = VisualizationTransform(path[i]);
-            newSphere.transform.localScale = Vector3.one * (jointRadius * visualizationScaler / 0.5f);
+            newSphere.transform.SetParent(visualizationContainer.transform, false);
+            newSphere.transform.localPosition = path[i];
+            newSphere.transform.localScale = Vector3.one * (jointRadius / 0.5f);
         }
         for (int i = 0; i < path.Length - 1; i++) {
             GameObject newCylinder = Instantiate(cylinder);
             Vector3 dir = path[i + 1] - path[i];
-            newCylinder.transform.position = VisualizationTransform(path[i]);
-            newCylinder.transform.rotation = Quaternion.LookRotation(dir);
-            newCylinder.transform.localScale = new Vector3(pathRadius * visualizationScaler / 0.5f, pathRadius * visualizationScaler / 0.5f, dir.magnitude * visualizationScaler / 2);
+            newCylinder.transform.SetParent(visualizationContainer.transform, false);
+            newCylinder.transform.localPosition = path[i];
+            newCylinder.transform.localRotation = Quaternion.LookRotation(dir);
+            newCylinder.transform.localScale = new Vector3(pathRadius / 0.5f, pathRadius / 0.5f, dir.magnitude / 2);
         }
-    }
-
-    public Vector3 VisualizationTransform(Vector3 pos) {
-        return pos * visualizationScaler + visualizationCenter;
     }
 
     private class SimulatedPointer {

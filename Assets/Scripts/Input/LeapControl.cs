@@ -104,7 +104,7 @@ public class LeapControl : MonoBehaviour {
                 if (calibrationIndex >= 4) {
                     UpdateTrackedSpace();
                     calibrationIndex = -1;
-                    SceneControl.Play();
+                    SceneControl.Unpause();
                 } else {
                     Links.links.calibrationInstructions[calibrationIndex].SetActive(true);
                 }

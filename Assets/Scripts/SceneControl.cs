@@ -41,7 +41,7 @@ public class SceneControl : MonoBehaviour {
         Time.timeScale = 0.1f;
     }
 
-    public static void Play() {
+    public static void Unpause() {
         Time.timeScale = 1;
     }
 
@@ -55,5 +55,27 @@ public class SceneControl : MonoBehaviour {
         GrabDetector.Reset();
         UpdateSender.Reset();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PlayMain() {
+        PlayMainScene();
+    }
+    public static void PlayMainScene() {
+        TrajectoryDetector.Reset();
+        HandUpDetector.Reset();
+        GrabDetector.Reset();
+        UpdateSender.Reset();
+        SceneManager.LoadScene("Main");
+    }
+
+    public void PlayTest() {
+        PlayTestScene();
+    }
+    public static void PlayTestScene() {
+        TrajectoryDetector.Reset();
+        HandUpDetector.Reset();
+        GrabDetector.Reset();
+        UpdateSender.Reset();
+        SceneManager.LoadScene("Test Chamber");
     }
 }
