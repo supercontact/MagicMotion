@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class SceneControl : MonoBehaviour {
 
+    public bool isRealGame;
+
 	// Use this for initialization
 	void Start () {
 
@@ -11,19 +13,21 @@ public class SceneControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GetComponentInChildren<Player>().isDead) {
-            Links.links.gameOver.SetActive(true);
-        }
-        Unit[] units = GetComponentsInChildren<Unit>();
-        bool win = true;
-        for (int i = 0; i < units.Length; i++) {
-            if (units[i].team != 1 && !units[i].isDead) {
-                win = false;
-                break;
+        if (isRealGame) {
+            if (GetComponentInChildren<Player>().isDead) {
+                Links.links.gameOver.SetActive(true);
             }
-        }
-        if (win) {
-            Links.links.gameWon.SetActive(true);
+            Unit[] units = GetComponentsInChildren<Unit>();
+            bool win = true;
+            for (int i = 0; i < units.Length; i++) {
+                if (units[i].team != 1 && !units[i].isDead) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win) {
+                Links.links.gameWon.SetActive(true);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -39,10 +43,12 @@ public class SceneControl : MonoBehaviour {
 
     public static void EnterSlowMotion() {
         Time.timeScale = 0.1f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 
     public static void Unpause() {
         Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f;
     }
 
     public static void Pause() {

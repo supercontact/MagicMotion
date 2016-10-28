@@ -55,7 +55,11 @@ public class LeapControl : MonoBehaviour {
     public float fingerBendingAngleThreshold = 90;
     public float stateChangeDelay = 0.2f;
 
-    private Vector3[] cornerPositions;
+    private static Vector3[] cornerPositions = new Vector3[] {
+            new Vector3(-0.13f, 0.28f, 0.4f),
+            new Vector3(0.13f, 0.28f, 0.4f),
+            new Vector3(0.13f, 0.1f, 0.35f),
+            new Vector3(-0.13f, 0.1f, 0.35f)};
     private Vector3 center;
     private Vector3 axisX, axisY, axisZ;
     private float width, height;
@@ -74,12 +78,6 @@ public class LeapControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         control = this;
-        cornerPositions = new Vector3[] {
-            new Vector3(-0.13f, 0.28f, -0.6f),
-            new Vector3(0.13f, 0.28f, -0.6f),
-            new Vector3(0.13f, 0.1f, -0.65f),
-            new Vector3(-0.13f, 0.1f, -0.65f)
-        };
         UpdateTrackedSpace();
     }
 	
@@ -374,7 +372,7 @@ public class LeapControl : MonoBehaviour {
     }
 
     public static Vector3 GetTargetingPositionOnScreen() {
-        if (handState == HandState.Pointing) {
+        if (isPointing) {
             return new Vector3(fingerPoint.x + Screen.width / 2, fingerPoint.y + Screen.height / 2, fingerPoint.z);
         } else {
             return new Vector3(handPoint.x + Screen.width / 2, handPoint.y + Screen.height / 2, handPoint.z);

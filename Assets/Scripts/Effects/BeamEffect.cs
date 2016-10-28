@@ -45,12 +45,14 @@ public class BeamEffect : MonoBehaviour {
     public void ParticlesOn() {
         if (!particlesIsOn) {
             particles.Play();
+            particlesIsOn = true;
         }
     }
 
     public void ParticlesOff() {
         if (particlesIsOn) {
             particles.Stop();
+            particlesIsOn = false;
         }
     }
 
