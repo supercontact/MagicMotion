@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of an object emerging from below the floor.
+/// </summary>
 public class EmergingEffect : MonoBehaviour {
 
     public float riseHeight = 2.5f;

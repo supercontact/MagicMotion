@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A big enemy that can split into multiple small enemies when die.
+/// </summary>
 public class BigEnemy : WanderingBasicAI {
-	
-	public float bulletRange = 15f;
-	public float bulletSpeed = 8f;
 
     private Vector3[] spawnPosition = new Vector3[] {
         Vector3.left + Vector3.forward,

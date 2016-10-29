@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of the aim marker used for earth spike spell.
+/// </summary>
 public class AimMarker : MonoBehaviour {
 
     public GameObject innerRing;

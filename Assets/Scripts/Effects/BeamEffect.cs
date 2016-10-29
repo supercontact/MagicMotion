@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of the light beam.
+/// </summary>
 public class BeamEffect : MonoBehaviour {
 
     public GameObject innerBeam;

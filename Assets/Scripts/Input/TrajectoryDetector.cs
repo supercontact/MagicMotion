@@ -2,24 +2,37 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/// <summary>
+/// This component detects the drawing performed by the user's index finger, and dispatches event whenever the user finished drawing the predefined path.
+/// It uses a "balls running through tubes" model, which considers the drawing complete if any of the continuously spawned balls driven by user's finger movement reached the end of the path.
+/// If a ball keeps crashing into the border of the tube, it will be removed when a defined threshold is surpassed. 
+/// It has multiple scale level where the balls performs different amount of movement at the same times, which is useful for detecting various gesture size.
+/// It also support visualization of the model.
+/// </summary>
 public class TrajectoryDetector : MonoBehaviour {
 
     public delegate void TriggerHandler(string type);
     public static event TriggerHandler OnTrigger;
     public static List<TrajectoryDetector> actionList = new List<TrajectoryDetector>();
 
+    /// <summary>
+    /// The path to follow, representing a specific gesture (or rune).
+    /// </summary>
     public Vector3[] path;
 
     public string type = "action";
     public float maxDuration = 2;
     public float jointRadius = 100;
     public float pathRadius = 80;
-    public float jointOvershootFactor = 0.5f;
-    public float pathOvershootFactor = 0.25f;
+    public float jointOvershootFactor = 0.5f; // Amount of excessive movement allowed when crashing into the border of the sphere joint. Number is the portion of the previous segment length. 
+    public float pathOvershootFactor = 0.25f; // Amount of excessive movement allowed when crashing into the border of the cylinder tube. Number is the portion of the current segment length. 
+    public float scaleFactor = 1.2f;
+    public int maxScaleLevel = 3;
+    public int minScaleLevel = -3;
 
-    public bool initVisualization = false;
+    // Visualization related
+    public bool initVisualization = false; // Visualization can only be actived at the start of the scene.
     public GameObject visualizationContainer;
-
     public GameObject sphere;
     public GameObject cylinder;
     public GameObject marker;
@@ -32,6 +45,7 @@ public class TrajectoryDetector : MonoBehaviour {
     private bool visualizing = false;
     private Dictionary<SimulatedPointer, GameObject> visualMarkers;
 
+    // Should be called when reloading scenes.
     public static void Reset() {
         actionList = new List<TrajectoryDetector>();
         OnTrigger = null;
@@ -49,9 +63,9 @@ public class TrajectoryDetector : MonoBehaviour {
 	void Update() {
         if (LeapControl.handState == LeapControl.HandState.Pointing) {
             input = Vector3.ProjectOnPlane(LeapControl.fingerPoint, Vector3.forward);
-            for (int s = -2; s <= 3; s++) {
+            for (int s = minScaleLevel; s <= maxScaleLevel; s++) {
                 SimulatedPointer newPointer = new SimulatedPointer(path[0], input);
-                newPointer.multiplier = Mathf.Pow(1.2f, s);
+                newPointer.multiplier = Mathf.Pow(scaleFactor, s);
                 pointers.Add(newPointer);
             }
         } else {
@@ -63,7 +77,6 @@ public class TrajectoryDetector : MonoBehaviour {
                 pointer.progress = -1;
                 continue;
             }
-            //pointer.velocity += elasticCoefficient * (LeapControl.fingerPoint + pointer.inputDelta - pointer.position) * Time.deltaTime;
             Vector3 movement = input - prevInput;
             while (movement.sqrMagnitude > 0) {
                 if (pointer.progress < 0) break;
@@ -100,7 +113,7 @@ public class TrajectoryDetector : MonoBehaviour {
         prevInput = input;
     }
 
-    // Return remaining time
+    // Returns remaining movement
     private Vector3 pointerMoveInSphere(SimulatedPointer pointer, Vector3 movement) {
         Vector3 center = path[pointer.progress / 2];
         Vector3 right = Vector3.Cross(pointer.position - center, movement);
@@ -140,6 +153,7 @@ public class TrajectoryDetector : MonoBehaviour {
         }
     }
 
+    // Returns remaining movement
     private Vector3 pointerMoveInCylinder(SimulatedPointer pointer, Vector3 movement) {
         Vector3 a = path[pointer.progress / 2];
         Vector3 b = path[(pointer.progress + 1) / 2];

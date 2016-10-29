@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// This component detects the "hand up" gesture (the user's dominant hand facing up and moving up). Events are dispatched if the gesture is detected.
+/// </summary>
 public class HandUpDetector : MonoBehaviour {
 
     public delegate void TriggerHandler();
@@ -9,7 +12,7 @@ public class HandUpDetector : MonoBehaviour {
     public static HandUpDetector detector;
 
     public float distanceRequired = 300;
-    public float palmAngle = 15;
+    public float palmAngle = 15; // The angle of the palm normal leaning backwards
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
 
@@ -17,6 +20,7 @@ public class HandUpDetector : MonoBehaviour {
 
     private float currentDistance = 0;
 
+    // Should be called when reloading scenes.
     public static void Reset() {
         OnTrigger = null;
     }

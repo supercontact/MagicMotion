@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A spell that launches multiple fireballs in front of the caster.
+/// It is powerful, but beware that the fire ball can hit friendly units.
+/// </summary>
 public class FireBallSpell : SpecialAttack {
 
     public float range = 20;

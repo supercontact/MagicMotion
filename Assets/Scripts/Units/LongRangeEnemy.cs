@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// An enemy that throws heavy projectiles at the player.
+/// It constantly switches between different throw mode (for the sake of testing).
+/// </summary>
 public class LongRangeEnemy : WanderingBasicAI {
 	
 	public float bulletRange = 15f;
 	public float bulletSpeed = 8f;
-
 
 	// Update is called once per frame
 	public override void Update () {

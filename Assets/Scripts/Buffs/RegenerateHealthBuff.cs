@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A unit with this buff gradually recovers HP.
+/// </summary>
 public class RegenerateHealthBuff : MonoBehaviour {
 
     public Unit unit;

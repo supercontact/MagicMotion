@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// The base class of all units. Can preform basic tasks
+/// </summary>
 public class Unit : MonoBehaviour {
 
     public enum State
@@ -34,7 +37,6 @@ public class Unit : MonoBehaviour {
     public bool isImmuneToControl = false;
     public bool isDead = false;
     public bool isInvincible = false;
-    public GameObject damageTextPrefab;
 
     public State state = State.Idle;
     public Vector3 moveTargetPoint;
@@ -45,6 +47,7 @@ public class Unit : MonoBehaviour {
 
     public CharacterController controller;
     public Animator animator;
+    public GameObject damageTextPrefab;
 
     private Quaternion targetRotation;
     private float attackTimer = 0;
@@ -150,60 +153,26 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public virtual void PreAttackAction(Unit target) {
-        // To be overridden
-        if (animator != null) {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
-                animator.SetTrigger("Attack");
-                animator.SetFloat("AttackSpeed", (animator.GetFloat("AttackDuration") + 0.1f) / attackPeriod);
-            }
-        }
-    }
-    public virtual void AttackAction(Unit target) {
-        // To be overridden
-    }
-    public virtual int ReceiveDamageAction(int damage, Unit attacker) {
-        // To be overridden, return actual damage received.
-        return damage;
-    }
-    public virtual float InterruptAction(float duration) {
-        // To be overridden, return actual duration stunned.
-        if (animator != null) {
-            float animationDuration = Mathf.Min(duration, interruptDuration);
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
-                animator.SetTrigger("Stun");
-                animator.SetFloat("StunSpeed", (animator.GetFloat("StunDuration") + 0.1f) / animationDuration);
-            }
-        }
-        return duration;
-    }
-    public virtual Vector3 SendFlyingAction(Vector3 acc) {
-        // To be overridden, return actual velocity applied.
-        return acc;
-    }
-    public virtual int LandAction(Vector3 velocity) {
-        // To be overridden, return landing damage.
-        return (int)velocity.sqrMagnitude;
-    }
-    public virtual void DieAction() {
-        // To be overridden
-        if (animator != null) {
-            animator.SetTrigger("Die");
-        }
-    }
-
-
 
     public bool isBusy() {
         return isDead || state == State.Attacking || state == State.Casting || state == State.Stunned || state == State.Controlled;
     }
 
+
+    // The following methods are basic actions that a unit can perform:
+
+    /// <summary>
+    /// Stops moving.
+    /// </summary>
     public void Stop() {
         if (!isBusy()) {
             state = State.Idle;
         }
     }
 
+    /// <summary>
+    /// Stops any activity.
+    /// </summary>
     public void ForceStop() {
         if (state == State.Attacking && !attacked) {
             attackTimer = 0;
@@ -218,7 +187,10 @@ public class Unit : MonoBehaviour {
         state = State.Idle;
     }
 
-    // if speed is 0, move with default unit move speed.
+    /// <summary>
+    /// Move to a target position with certain speed.
+    /// If speed is 0, move with default unit move speed.
+    /// </summary>
     public void MoveTo(Vector3 target, float speed = 0) {
         if (!isBusy()) {
             currentMoveSpeed = speed == 0 ? moveSpeed : speed;
@@ -227,10 +199,19 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Move towards a direction with certain speed until Stop or ForceStop is called.
+    /// If speed is 0, move with default unit move speed.
+    /// </summary>
     public void Move(Vector3 direction, float speed = 0) {
         MoveTo(transform.position + direction * 99999, speed);
     }
 
+    /// <summary>
+    /// Following a target unit with certain speed until Stop or ForceStop is called.
+    /// A minimum distance of pursueDistance will be kept.s
+    /// If speed is 0, move with default unit move speed.
+    /// </summary>
     public void Pursue(Unit target, float speed = 0) {
         if (!isBusy()) {
             currentMoveSpeed = speed == 0 ? moveSpeed : speed;
@@ -239,6 +220,9 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Directly performs an attack towards the target (does not check if target is in attack range).
+    /// </summary>
     public void Attack(Unit target) {
         if (!isBusy() && attackTimer <= 0) {
             state = State.Attacking;
@@ -250,6 +234,9 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Directly performs a given special attack towards the target (does not check if target is in attack range, but checks the IsUsableNow condition of the special attack).
+    /// </summary>
     public void Cast(Unit target, SpecialAttack specialAttack) {
         specialAttack.target = target;
         specialAttack.attacker = this;
@@ -263,7 +250,11 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    // if time is 0, interrupt with default unit interrupt duration.
+    /// <summary>
+    /// Stun the unit for a certain duration and interrupt any of its action.
+    /// The final duration of the stun is decided by the Unit's InterruptAction method.
+    /// If time is 0, interrupt with default unit interrupt duration.
+    /// </summary>
     public void Interrupt(float time = 0) {
         float duration = InterruptAction(time == 0 ? interruptDuration : time);
         if (duration >= 0) {
@@ -273,6 +264,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// The unit receives damage. Final damage amount done to the unit is decided by the Unit's ReceiveDamageAction method.
+    /// The unit will get stunned if interruptableByNormalAttack is set to true.
+    /// </summary>
     public void ReceiveDamage(int damage, Unit attacker, bool nonInterruptive = false) {
         if (!isInvincible && !isDead) {
             int realDamage = ReceiveDamageAction(damage, attacker);
@@ -288,6 +283,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Send the unit to the sky. Also stuns the unit when it's flying.
+    /// Initial speed can be altered by the Unit's SendFlyingAction method.
+    /// </summary>
     public void SendFlying(Vector3 impulse) {
         Vector3 acc = impulse / mass;
         acc = SendFlyingAction(acc);
@@ -300,6 +299,10 @@ public class Unit : MonoBehaviour {
         isFlying = true;
     }
 
+    /// <summary>
+    /// Control the unit. Checks isImmuneToControl condition.
+    /// Unit controled cannot perform actions until the control is released.
+    /// </summary>
     public void Control() {
         if (!isImmuneToControl) {
             ForceStop();
@@ -307,12 +310,18 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Release the control of this unit.
+    /// </summary>
     public void ReleaseControl() {
         if (state == State.Controlled) {
             state = State.Idle;
         }
     }
 
+    /// <summary>
+    /// Instantly kill this unit. Checks isInvincible condition.
+    /// </summary>
     public void Kill() {
         if (!isInvincible) {
             decayTimer = decayTime;
@@ -323,6 +332,89 @@ public class Unit : MonoBehaviour {
 
 
 
+    // The following methods are unit specific actions that can be overriden by subclasses:
+
+    /// <summary>
+    /// Called when the unit starts an attack (i.e. start attack animation)
+    /// </summary>
+    public virtual void PreAttackAction(Unit target) {
+        // To be overridden
+        if (animator != null) {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                animator.SetTrigger("Attack");
+                animator.SetFloat("AttackSpeed", (animator.GetFloat("AttackDuration") + 0.1f) / attackPeriod);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Called when the unit actually do the attack (i.e. cause damage), which happened attackDelay seconds after initiating the attack.
+    /// </summary>
+    public virtual void AttackAction(Unit target) {
+        // To be overridden
+        target.ReceiveDamage(attackDamage, this);
+    }
+
+    /// <summary>
+    /// Called when the unit receives damage.
+    /// Should return actual damage received.
+    /// </summary>
+    public virtual int ReceiveDamageAction(int damage, Unit attacker) {
+        // To be overridden
+        return damage;
+    }
+
+    /// <summary>
+    /// Called when the unit gets stunned.
+    /// Should return actual duration stunned. If the duration is negative, the unit is not interrupted.
+    /// </summary>
+    public virtual float InterruptAction(float duration) {
+        // To be overridden
+        if (animator != null) {
+            float animationDuration = Mathf.Min(duration, interruptDuration);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                animator.SetTrigger("Stun");
+                animator.SetFloat("StunSpeed", (animator.GetFloat("StunDuration") + 0.1f) / animationDuration);
+            }
+        }
+        return duration;
+    }
+
+    /// <summary>
+    /// Called when the unit is sent flying.
+    /// Should return actual speed changed applied.
+    /// </summary>
+    public virtual Vector3 SendFlyingAction(Vector3 acc) {
+        // To be overridden
+        return acc;
+    }
+
+    /// <summary>
+    /// Called when the unit hits the land after being sent flying.
+    /// Should return damage caused by the crash (currently no damage).
+    /// </summary>
+    public virtual int LandAction(Vector3 velocity) {
+        // To be overridden
+        return (int)velocity.sqrMagnitude;
+    }
+
+    /// <summary>
+    /// Called when the unit dies.
+    /// </summary>
+    public virtual void DieAction() {
+        // To be overridden
+        if (animator != null) {
+            animator.SetTrigger("Die");
+        }
+    }
+
+
+
+    // Static helper methods:
+
+    /// <summary>
+    /// Finds any units within certain range of a given position
+    /// </summary>
     public static List<Unit> UnitsInRange(Vector3 position, float range, bool aliveOnly = true) {
         Collider[] colliders = Physics.OverlapSphere(position, range);
         List<Unit> units = new List<Unit>();
@@ -334,19 +426,26 @@ public class Unit : MonoBehaviour {
         }
         return units;
     }
+
+    /// <summary>
+    /// Finds any enemies within certain range of a given position
+    /// </summary>
     public static List<Unit> EnemiesInRange(Vector3 position, float range, int team, bool aliveOnly = true) {
         List<Unit> units = UnitsInRange(position, range, aliveOnly);
         List<Unit> enemies = units.FindAll(unit => unit.team != team);
         return enemies;
     }
+
+    /// <summary>
+    /// Finds any friendly units within certain range of a given position
+    /// </summary>
     public static List<Unit> FriendsInRange(Vector3 position, float range, int team, bool aliveOnly = true) {
         List<Unit> units = UnitsInRange(position, range, aliveOnly);
         List<Unit> friends = units.FindAll(unit => unit.team == team);
         return friends;
     }
 
-
-    protected float HorizontalDistance(Vector3 p1, Vector3 p2) {
+    public static float HorizontalDistance(Vector3 p1, Vector3 p2) {
         return Mathf.Sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.z - p1.z) * (p2.z - p1.z));
     }
 

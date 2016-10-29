@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The almighty magician, who master 10 powerful spells. However no one has ever seen his face...
+/// </summary>
 public class Player : Unit {
 
     public enum PlayerState
@@ -23,7 +26,7 @@ public class Player : Unit {
     private LightningStrike skillLightning;
     private SummonHelper skillSummonHelper;
     private Heal skillHeal;
-    private SpeedUp skillIncreaseSpeed;
+    private SpeedUp skillSpeedUp;
 
     // Use this for initialization
     public override void Start () {
@@ -42,7 +45,7 @@ public class Player : Unit {
         skillLightning = new LightningStrike();
         skillSummonHelper = new SummonHelper();
         skillHeal = new Heal();
-        skillIncreaseSpeed = new SpeedUp();
+        skillSpeedUp = new SpeedUp();
     }
 
     // Update is called once per frame
@@ -103,15 +106,17 @@ public class Player : Unit {
             } else if (type == "Heal") {
                 Cast(this, skillHeal);
             } else if (type == "Infinity") {
-                Cast(this, skillIncreaseSpeed);
+                Cast(this, skillSpeedUp);
             }
         }
     }
+
     private void HandUpGestureTriggered() {
         if (!isBusy()) {
             Cast(null, skillAntiGravity);
         }
     }
+
     private void GrabGestureTriggered() {
         if (!isBusy()) {
             Cast(null, skillGrabbing);

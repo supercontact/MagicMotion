@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// BasicAI chases enemies within its detection range and attacks them if they are within attack range. 
+/// </summary>
 public class BasicAI : Unit {
 
     public enum AIState
@@ -65,10 +68,4 @@ public class BasicAI : Unit {
         }
         base.Update();
     }
-
-
-    public override void AttackAction(Unit target) {
-        target.ReceiveDamage(attackDamage, this);
-    }
-
 }

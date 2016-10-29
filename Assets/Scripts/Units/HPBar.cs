@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// This component controls the HP bar (3D version) of a unit, which updates automatically.
+/// It can always rotate towards the camera, and it shows different color with different amount of HP.
+/// </summary>
 public class HPBar : MonoBehaviour {
 
+	public static ColorMixer colorGradient;
 
-	public static ColorMixer colorMix;
-
-	//camera position
 	public Transform cameraMain;
 	public Unit unit;
 	public MeshRenderer barRenderer;
@@ -24,11 +26,11 @@ public class HPBar : MonoBehaviour {
             bar.LookAt(cameraMain.transform);
         }
         bar.localScale = new Vector3(1,1,1);
-        if (colorMix == null) {
-            colorMix = new ColorMixer();
-            colorMix.InsertColorNode(Color.red, 0.2f);
-            colorMix.InsertColorNode(new Color(1, 1, 0), 0.6f);
-            colorMix.InsertColorNode(Color.green, 1);
+        if (colorGradient == null) {
+            colorGradient = new ColorMixer();
+            colorGradient.InsertColorNode(Color.red, 0.2f);
+            colorGradient.InsertColorNode(new Color(1, 1, 0), 0.6f);
+            colorGradient.InsertColorNode(Color.green, 1);
         }
 
 	}
@@ -41,7 +43,7 @@ public class HPBar : MonoBehaviour {
             bar.LookAt(cameraMain.transform);
         }
         bar.localScale = new Vector3 (hpRatio, 1, 1);
-        barRenderer.material.color = colorMix.GetColor (hpRatio);
+        barRenderer.material.color = colorGradient.GetColor (hpRatio);
 	}
 }
 

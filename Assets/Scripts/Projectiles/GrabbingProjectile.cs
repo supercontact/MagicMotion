@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// The grabbing projectile can auto snap to an enemy if that enemy is the closest enemy that can be reached with a given maximum radius of curvature and a given maximum turning angle.
+/// </summary>
 public class GrabbingProjectile : Projectile {
 
     public Grabbing relatedAttack;
@@ -95,6 +98,9 @@ public class GrabbingProjectile : Projectile {
             radiusOfCurvature <= attractRadiusOfCurvature;
     }
 
+    /// <summary>
+    /// Finds a circle arc trajectory that pass through the target position starting at the current position with current facing.
+    /// </summary>
     public void Trajectory(Vector3 position, out float distance, out float radiusOfCurvature, out Vector3 rotationAxis) {
         Vector3 relativePosition = transform.InverseTransformDirection(position - transform.position);
         Vector2 targetPosition = new Vector2(Mathf.Sqrt(relativePosition.x * relativePosition.x + relativePosition.y * relativePosition.y), relativePosition.z);

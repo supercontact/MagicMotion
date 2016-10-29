@@ -2,10 +2,13 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// This component controls the HP bar (UI version) of a unit, which updates automatically.
+/// It shows different color with different amount of HP.
+/// </summary>
 public class HPBarUI : MonoBehaviour {
 
-
-	public static ColorMixer colorMix;
+	public static ColorMixer colorGradient;
 
 	public Unit unit;
 	public Image barImage;
@@ -16,11 +19,11 @@ public class HPBarUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (colorMix == null) {
-            colorMix = new ColorMixer();
-            colorMix.InsertColorNode(Color.red, 0.2f);
-            colorMix.InsertColorNode(new Color(1, 1, 0), 0.6f);
-            colorMix.InsertColorNode(Color.green, 1);
+        if (colorGradient == null) {
+            colorGradient = new ColorMixer();
+            colorGradient.InsertColorNode(Color.red, 0.2f);
+            colorGradient.InsertColorNode(new Color(1, 1, 0), 0.6f);
+            colorGradient.InsertColorNode(Color.green, 1);
         }
         initialOffset = bar.offsetMax.x;
     }
@@ -31,7 +34,7 @@ public class HPBarUI : MonoBehaviour {
 		hpRatio = Mathf.Clamp01 (hpRatio);
         bar.offsetMax = new Vector2(hpRatio * initialOffset, bar.offsetMax.y);
         bar.offsetMin = new Vector2(-hpRatio * initialOffset, bar.offsetMin.y);
-        barImage.color = colorMix.GetColor (hpRatio);
+        barImage.color = colorGradient.GetColor (hpRatio);
         hpText.text = Mathf.Max(unit.HP, 0) + "/" + unit.maxHP;
 	}
 }

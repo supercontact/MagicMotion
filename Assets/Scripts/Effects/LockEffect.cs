@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of the "Lock ring" which appears when grabbing something.
+/// </summary>
 public class LockEffect : MonoBehaviour {
 
     public GameObject sprite1;

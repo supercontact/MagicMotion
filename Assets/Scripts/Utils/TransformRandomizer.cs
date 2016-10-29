@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// This component randomizes the initial transformation of the GameObject.
+/// </summary>
 public class TransformRandomizer : MonoBehaviour {
 
-    public float scaleRange = 0.2f;
-    public float displaceXRange = 0.5f;
+    public float scaleRange = 0;
+    public float displaceXRange = 0;
     public float displaceYRange = 0;
-    public float displaceZRange = 0.5f;
-    public float rotationRange = 360;
-    public float tiltRange = 30;
+    public float displaceZRange = 0;
+    public float rotationRange = 0; // Horizontal rotation (rotation around y-axis)
+    public float tiltRange = 0; // Tilting the y axis by random angle in random direction
 
-    // Use this for initialization
+    // Apply in Awake to correctly transform static objects of the scene.
     void Awake() {
+        Apply();
+    }
+
+    public void Apply() {
         transform.localPosition = transform.localPosition + new Vector3(
             Random.Range(-displaceXRange / 2, displaceXRange / 2),
             Random.Range(-displaceYRange / 2, displaceYRange / 2),

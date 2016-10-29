@@ -2,12 +2,17 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// This class maintains static links for prefabs and scenes elements.
+/// Links should be set in the unity inspector.
+/// </summary>
 public class Links : MonoBehaviour {
 
     public static Links links;
 
     public Canvas canvas;
 
+    // Unit prefabs
     public GameObject enemy1;
     public GameObject helper1;
     public GameObject smallEnemy;
@@ -16,6 +21,7 @@ public class Links : MonoBehaviour {
     public GameObject shootingEnemy;
 	public GameObject homingEnemy;
 
+    // Projectile prefabs
     public GameObject grabbingProjectile;
     public GameObject stoneProjectile;
     public GameObject smallBullet;
@@ -23,6 +29,7 @@ public class Links : MonoBehaviour {
 	public GameObject homingBullet;
     public GameObject fireBall;
 
+    // Effect prefabs
     public GameObject explosion;
     public GameObject explosionMissile;
     public GameObject lockEffect;
@@ -38,6 +45,7 @@ public class Links : MonoBehaviour {
     public GameObject speedEffect;
     public GameObject damageText;
 
+    // UI elements
     public GameObject ligntningImage, starImage, spikeImage, circleImage, crossImage, healImage, infinityImage, flashImage, handImage;
     public GameObject[] calibrationInstructions;
     public GameObject calibrationWarning;

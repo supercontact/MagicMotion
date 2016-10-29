@@ -5,6 +5,12 @@ using Leap;
 using Leap.Unity;
 using System.Collections;
 
+/// <summary>
+/// This component wraps the Leap Motion library and extract useful hand input information, including index finger positions, palm directions, hand states, etc.
+/// It transform the positions into screen space (with depth) which can be calibrated by the user.
+/// The dominant hand can be set to either right hand or left hand.
+/// You can simulate the hand movement using mouse if simulateWithMouse is set to true.
+/// </summary>
 public class LeapControl : MonoBehaviour {
 
     public static LeapControl control;
@@ -29,6 +35,9 @@ public class LeapControl : MonoBehaviour {
     public static Hand mainHand;
     public static Hand subHand;
 
+    public static bool rightHanded = true;
+
+    // Information about the dominant hand
     public static Vector3 fingerPoint;
     public static Vector3 fingerVector;
     public static Vector3 handPoint;
@@ -39,6 +48,7 @@ public class LeapControl : MonoBehaviour {
     public static bool isTracked;
     public static bool isPointing;
 
+    // Information about the secondary hand
     public static Vector3 fingerPoint2;
     public static Vector3 fingerVector2;
     public static Vector3 handPoint2;
@@ -48,8 +58,6 @@ public class LeapControl : MonoBehaviour {
     public static HandState handState2;
     public static bool isTracked2;
     public static bool isPointing2;
-
-    public static bool rightHanded = true;
     
 
     public float fingerBendingAngleThreshold = 90;
@@ -75,8 +83,16 @@ public class LeapControl : MonoBehaviour {
     private Vector3 lastMouseSmoothedSpeed;
 
 
-	// Use this for initialization
-	void Start () {
+    public void SetRightHanded(bool value) {
+        rightHanded = value;
+    }
+
+    public void SetMouseSimulation(bool value) {
+        simulateWithMouse = value;
+    }
+
+    // Use this for initialization
+    void Start () {
         control = this;
         UpdateTrackedSpace();
     }
@@ -144,7 +160,7 @@ public class LeapControl : MonoBehaviour {
         status.text = handState.ToString();
     }
 
-    public void UpdateHands() {
+    private void UpdateHands() {
         if (provider.IsConnected()) {
             frame = new Frame();
             frame.CopyFrom(provider.CurrentFrame);
@@ -179,7 +195,7 @@ public class LeapControl : MonoBehaviour {
         }
     }
 
-    public void UpdateInfo(Hand hand, ref Vector3 fingerPoint, ref Vector3 fingerVector, ref Vector3 handPoint, ref Vector3 handSpeed, ref Vector3 smoothedHandSpeed
+    private void UpdateInfo(Hand hand, ref Vector3 fingerPoint, ref Vector3 fingerVector, ref Vector3 handPoint, ref Vector3 handSpeed, ref Vector3 smoothedHandSpeed
         , ref Vector3 palmDirection, ref HandState handState, ref bool isTracked, ref bool isPointing, ref HandState nextState, ref float stateChangeProgress) {
         if (hand != null) {
             Finger finger = GetIndexFinger(hand);
@@ -212,15 +228,7 @@ public class LeapControl : MonoBehaviour {
         }
     }
 
-    public void SetRightHanded(bool value) {
-        rightHanded = value;
-    }
-
-    public void SetMouseSimulation(bool value) {
-        simulateWithMouse = value;
-    }
-
-    public bool SetCalibrationPoint(int i) {
+    private bool SetCalibrationPoint(int i) {
         if (rightHand == null) {
             Debug.Log("Right hand not found!");
         } else {
@@ -237,7 +245,7 @@ public class LeapControl : MonoBehaviour {
         return false;
     }
 
-    public void UpdateTrackedSpace() {
+    private void UpdateTrackedSpace() {
         center = (cornerPositions[0] + cornerPositions[1] + cornerPositions[2] + cornerPositions[3]) / 4;
         axisZ = Vector3.zero;
         for (int i = 0; i < 4; i++) {
@@ -371,6 +379,9 @@ public class LeapControl : MonoBehaviour {
         return HandState.Other;
     }
 
+    /// <summary>
+    /// Returns the finger position if it is present, otherwise returns the hand position
+    /// </summary>
     public static Vector3 GetTargetingPositionOnScreen() {
         if (isPointing) {
             return new Vector3(fingerPoint.x + Screen.width / 2, fingerPoint.y + Screen.height / 2, fingerPoint.z);

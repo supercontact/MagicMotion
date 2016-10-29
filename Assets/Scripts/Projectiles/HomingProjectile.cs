@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A projectile that always follows the target.
+/// A maximum rotation speed can be set.
+/// </summary>
 public class HomingProjectile : Projectile  {
 
 	public Unit target;
 	public float speed = 2;
-    public float angleSpeed = 90;
+    public float anglularSpeed = 90;
 
     private Vector3 direction;
 
@@ -19,10 +23,10 @@ public class HomingProjectile : Projectile  {
 	public virtual void FixedUpdate() {
         Vector3 realDir = (target.transform.position + Vector3.up * target.centerHeight - transform.position).normalized;
         float angle = Vector3.Angle(direction, realDir);
-        if (angle < angleSpeed * Time.deltaTime) {
+        if (angle < anglularSpeed * Time.deltaTime) {
             direction = realDir;
         } else {
-            direction = Vector3.Slerp(direction, realDir, angleSpeed * Time.deltaTime / angle);
+            direction = Vector3.Slerp(direction, realDir, anglularSpeed * Time.deltaTime / angle);
         }
 		body.velocity = speed * direction.normalized;
         transform.rotation = Quaternion.LookRotation(direction);

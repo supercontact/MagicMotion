@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A spell that deals continuous damage to enemy. You can aim the beam with your finger.
+/// </summary>
 public class LightBeam : SpecialAttack {
 
     public int damagePerTick = 5;

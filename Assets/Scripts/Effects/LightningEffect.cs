@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of the lightning.
+/// </summary>
 public class LightningEffect : MonoBehaviour {
 
     public MeshRenderer imageRenderer;

@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// The effect of the damage text UI.
+/// </summary>
 public class DamageTextEffect : MonoBehaviour {
 
     public Vector2 initVelocity = Vector2.up * 300;

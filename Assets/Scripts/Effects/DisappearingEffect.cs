@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of a gameobject disappearing during a certain duration.
+/// Can manage the smooth disappearing of a quad with particle material, a flare and a particle system.
+/// </summary>
 public class DisappearingEffect : MonoBehaviour {
 
     public float duration = 1;

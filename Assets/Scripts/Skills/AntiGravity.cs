@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// A spell that sends all enemies close by into the sky. Useful when you are surrounded by enemies.
+/// Enemies farther away receive less impulse.
+/// </summary>
 public class AntiGravity : SpecialAttack {
 
     public float maxRadius = 5;

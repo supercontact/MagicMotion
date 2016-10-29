@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// A spell that summons a helper to help fighting the enemy.
+/// The number of helpers summoned does not have a limit... just for now.
+/// </summary>
 public class SummonHelper : SpecialAttack {
 
     public Vector3 position = new Vector3(0, 0, 2.5f);

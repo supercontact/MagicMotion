@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Using your other hand to raise a force shield that can block all incoming attacks. 
+/// However, it will also block your attacks... Well, not all of them. 
+/// </summary>
 public class ForceShield : MonoBehaviour {
 
     public Unit unit;
@@ -20,7 +24,7 @@ public class ForceShield : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        isActive = (LeapControl.isTracked2 && LeapControl.handState2 == LeapControl.HandState.Palm);
+        isActive = (!unit.isDead && LeapControl.isTracked2 && LeapControl.handState2 == LeapControl.HandState.Palm);
         
         if (isActive) {
             shield.SetActive(true);

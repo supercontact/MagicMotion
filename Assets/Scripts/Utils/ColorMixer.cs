@@ -24,7 +24,6 @@ public class ColorMixer {
 	}
 	public ExtendMode extendMode = ExtendMode.NORMAL;
 
-	//if do not have input parameter -> ExtendMode.NORMAL
 	public ColorMixer(ExtendMode extendMode = ExtendMode.NORMAL) {
 		colors = new LinkedList<ColorNode>();
 		this.extendMode = extendMode;
@@ -46,7 +45,6 @@ public class ColorMixer {
 
 	/// <summary>
 	/// Returns the color at certain position.
-	/// Value should be between 0 and 1.
 	/// </summary>
 	public Color GetColor(float value) {
 		if (colors.Count == 0) return new Color(0,0,0,0);

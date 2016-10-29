@@ -2,6 +2,9 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+/// <summary>
+/// This class is used for scene management.
+/// </summary>
 public class SceneControl : MonoBehaviour {
 
     public bool isRealGame;

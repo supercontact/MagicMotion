@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The crystal shard is a shiny projectile that has a flare effect and a particle effect attached.
+/// </summary>
 public class CrystalShard : SimpleProjectile {
 
     public ParticleSystem particles;

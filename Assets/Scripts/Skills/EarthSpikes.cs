@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// A spell that summons earth spikes in a small area, causing area damage. Useful to deal with tight groups of enemy.
+/// After casting the spell, the target position can be further adjusted by finger movement.
+/// </summary>
 public class EarthSpikes : SpecialAttack {
 
     public int damage = 50;

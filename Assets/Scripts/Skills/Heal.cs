@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A spell that gradually recover health of the target.
+/// The spell does not seem too easy to cast, isn't it? I recommand not to cast it when your are in tight battle...
+/// </summary>
 public class Heal : SpecialAttack
 {
     public float duration = 10;

@@ -2,6 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// This component detects the "grab" gesture (the user's dominant hand in palm state, facing forward, moving forward, and grip).
+/// A OnGrab event is dispatched if the gesture is detected. And OnRelease event is dispatched is the user opened up the hand after the gesture.
+/// </summary>
 public class GrabDetector : MonoBehaviour {
 
     public delegate void TriggerHandler();
@@ -12,7 +16,7 @@ public class GrabDetector : MonoBehaviour {
 
     public float distanceRequired = 300;
     public float distanceDropRate = 1500;
-    public float palmAngle = 30;
+    public float palmAngle = 30; // The angle of the palm normal leaning downward
     public float palmDirectionAngleThreshold = 30;
     public float palmVelocityAngleThreshold = 30;
 
@@ -20,6 +24,7 @@ public class GrabDetector : MonoBehaviour {
 
     private float currentDistance = 0;
 
+    // Should be called when reloading scenes.
     public static void Reset() {
         OnGrab = null;
         OnRelease = null;

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Summon a quick lightning strike that hits a random place in front of the caster.
+/// The lightning can be attracted to an enemy if the enemy is close enough to the striking position.
+/// </summary>
 public class LightningStrike : SpecialAttack {
 
     public float areaCenterDistance = 5;

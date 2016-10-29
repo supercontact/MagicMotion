@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The effect of a shock ring.
+/// </summary>
 public class ShockRingEffect : MonoBehaviour {
 
     public MeshRenderer ring;

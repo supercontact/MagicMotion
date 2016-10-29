@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// An enemy that fires multiple long-range homing missiles at the player. 
+/// </summary>
 public class HomingEnemy : WanderingBasicAI {
 
 	public float bulletRange = 10f;
 	public float bulletSpeed = 8f;
 
 	private Vector3[] bulletDirections = new Vector3[] { Vector3.left, Vector3.up, Vector3.right };
-
 
 	public override void AttackAction(Unit target) {
 		for (int i = 0; i < bulletDirections.Length; i++) {

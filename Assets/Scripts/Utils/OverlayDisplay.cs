@@ -2,6 +2,10 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/// <summary>
+/// This component manages the display of the overlay UI images.
+/// It supports fade out effects. (I planned to add fade in if it is needed in the future)
+/// </summary>
 public class OverlayDisplay : MonoBehaviour {
     
     private static List<GameObject> uiElements;
@@ -32,7 +36,11 @@ public class OverlayDisplay : MonoBehaviour {
         }
 	}
 
-    // duration = 0 means never disappear;
+
+    /// <summary>
+    /// Show a UI component for certain duration, and then fade out during certain duraion.
+    /// duration = 0 means never disappear.
+    /// </summary>
     public static void Show(GameObject uiComponent, float duration, float fadeDuration) {
         if (!uiElements.Contains(uiComponent)) {
             uiElements.Add(uiComponent);
@@ -43,6 +51,9 @@ public class OverlayDisplay : MonoBehaviour {
         uiComponent.GetComponent<CanvasRenderer>().SetAlpha(1);
     }
 
+    /// <summary>
+    /// Show a UI component indefinately until Hide is called.
+    /// </summary>
     public static void ShowIndefinately(GameObject uiComponent) {
         if (!uiElements.Contains(uiComponent)) {
             uiElements.Add(uiComponent);
@@ -53,6 +64,9 @@ public class OverlayDisplay : MonoBehaviour {
         uiComponent.GetComponent<CanvasRenderer>().SetAlpha(1);
     }
 
+    /// <summary>
+    /// Hide an already-shown UI component with certain fade out time.
+    /// </summary>
     public static void Hide(GameObject uiComponent, float fadeDuration) {
         int index = uiElements.IndexOf(uiComponent);
         if (index >= 0) {

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Grab your enemy and throw it wherever you want.
+/// "I don't want to see your ugly face!" said the magician.
+/// </summary>
 public class Grabbing : SpecialAttack {
 
     public float projectileSpeed = 20;

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A unit with this buff has a temporary speed boost.
+/// </summary>
 public class SpeedBuff : MonoBehaviour {
 
     public Unit unit;

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// An enemy that throw rapid small projectiles at the player. Very fast but not very strong.
+/// </summary>
 public class MediumRangeEnemy : WanderingBasicAI {
 
 	public float bulletRange = 15f;
 	public float bulletSpeed = 8f;
-
 
 	// Update is called once per frame
 	public override void Update () {

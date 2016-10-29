@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// The Helper is a mysterious crystal floating in the air. It always follows the grand magician, and will fire crystal shards at any enemies close by. 
+/// </summary>
 public class Helper : Unit {
 
     public enum HelperState
@@ -25,16 +28,7 @@ public class Helper : Unit {
 
     public GameObject Crystal;
 
-    public override void Awake() {
-        base.Awake();
-    }
-
-    public override void Start() {
-        base.Start();
-    }
-
     public override void Update() {
-
         if (isBusy() && state != State.Attacking) {
             helperState = HelperState.Busy;
         } else if (helperState == HelperState.Busy) {
@@ -90,7 +84,7 @@ public class Helper : Unit {
                     }
                 }
             } else if (helperState == HelperState.Returning) {
-                // Returning
+                // Returnings
                 pursueDistance = followRange;
                 Pursue(master);
                 if (Vector3.Distance(transform.position, master.transform.position) <= attackReturnRange) {
@@ -102,7 +96,7 @@ public class Helper : Unit {
     }
 
     public override void AttackAction(Unit target) {
-        SimpleProjectile bullet = GameObject.Instantiate(Links.links.crystalBullet).GetComponent<SimpleProjectile>();
+        SimpleProjectile bullet = Instantiate(Links.links.crystalBullet).GetComponent<SimpleProjectile>();
         bullet.Attacker = this;
         bullet.team = team;
         bullet.damage = attackDamage;
@@ -111,5 +105,4 @@ public class Helper : Unit {
         Vector3 direction = (target.transform.position - transform.position).normalized;
         bullet.Launch(transform.position + 0.5f * direction + centerHeight * Vector3.up, direction);
     }
-
 }

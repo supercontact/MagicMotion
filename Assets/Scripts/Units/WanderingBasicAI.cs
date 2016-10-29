@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// WanderingBasicAI is a BasicAI that wanders randomly on the map if it is in idle state.
+/// </summary>
 public class WanderingBasicAI : BasicAI {
 
     public float wanderSpeed = 2f;
