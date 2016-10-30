@@ -77,8 +77,8 @@ public class GrabbingProjectile : Projectile {
         Unit closestUnit = null;
         float closestDistance = float.MaxValue;
         foreach (Unit unit in unitsInRange) {
-            if (IsReachable(unit.transform.position + unit.centerHeight * Vector3.up)) {
-                float distance = Vector3.Distance(unit.transform.position + unit.centerHeight * Vector3.up, transform.position);
+            float distance;
+            if (IsReachable(unit.transform.position + unit.centerHeight * Vector3.up, out distance)) {
                 if (distance < closestDistance) {
                     closestUnit = unit;
                     closestDistance = distance;
@@ -88,8 +88,7 @@ public class GrabbingProjectile : Projectile {
         return closestUnit;
     }
 
-    public bool IsReachable(Vector3 position) {
-        float distance;
+    public bool IsReachable(Vector3 position, out float distance) {
         float radiusOfCurvature;
         Vector3 rotationAxis;
         Trajectory(position, out distance, out radiusOfCurvature, out rotationAxis);
